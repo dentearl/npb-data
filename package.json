@@ -1,0 +1,14 @@
+{
+  "name": "npb-data",
+  "version": "1.0.0",
+  "description": "Automated regular season schedule and results pipeline for Nippon Professional Baseball (NPB)",
+  "type": "module",
+  "main": "scripts/scrapeNPB.js",
+  "scripts": {
+    "scrape": "node scripts/scrapeNPB.js",
+    "scrape:force": "node scripts/scrapeNPB.js --force"
+  },
+  "keywords": ["npb", "baseball", "nippon-professional-baseball", "central-league", "pacific-league", "schedule", "data"],
+  "author": "Dent Earl",
+  "license": "MIT"
+}

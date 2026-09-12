@@ -22,48 +22,59 @@ const rootDir = path.resolve(__dirname, '..');
 
 export const NPB_TEAM_MAPPING = {
   // Central League
-  'G':  { id: 3001, abbrev: 'G',  name: 'Yomiuri Giants', nativeName: '読売ジャイアンツ', league: 'NPB', division: 'Central League' },
-  'T':  { id: 3002, abbrev: 'T',  name: 'Hanshin Tigers', nativeName: '阪神タイガース', league: 'NPB', division: 'Central League' },
-  'DB': { id: 3003, abbrev: 'DB', name: 'Yokohama DeNA BayStars', nativeName: '横浜DeNAベイスターズ', league: 'NPB', division: 'Central League' },
-  'C':  { id: 3004, abbrev: 'C',  name: 'Hiroshima Toyo Carp', nativeName: '広島東洋カープ', league: 'NPB', division: 'Central League' },
-  'D':  { id: 3005, abbrev: 'D',  name: 'Chunichi Dragons', nativeName: '中日ドラゴンズ', league: 'NPB', division: 'Central League' },
-  'S':  { id: 3006, abbrev: 'S',  name: 'Tokyo Yakult Swallows', nativeName: '東京ヤクルトスワローズ', league: 'NPB', division: 'Central League' },
+  'G':  { id: 3001, abbrev: 'YOM',  name: 'Yomiuri Giants', nativeName: '読売ジャイアンツ', league: 'NPB', division: 'Central League' },
+  'T':  { id: 3002, abbrev: 'HAN',  name: 'Hanshin Tigers', nativeName: '阪神タイガース', league: 'NPB', division: 'Central League' },
+  'DB': { id: 3003, abbrev: 'DeNA', name: 'Yokohama DeNA BayStars', nativeName: '横浜DeNAベイスターズ', league: 'NPB', division: 'Central League' },
+  'C':  { id: 3004, abbrev: 'HIR',  name: 'Hiroshima Toyo Carp', nativeName: '広島東洋カープ', league: 'NPB', division: 'Central League' },
+  'D':  { id: 3005, abbrev: 'CHU',  name: 'Chunichi Dragons', nativeName: '中日ドラゴンズ', league: 'NPB', division: 'Central League' },
+  'S':  { id: 3006, abbrev: 'YAK',  name: 'Tokyo Yakult Swallows', nativeName: '東京ヤクルトスワローズ', league: 'NPB', division: 'Central League' },
 
   // Pacific League
-  'H':  { id: 3007, abbrev: 'H',  name: 'Fukuoka SoftBank Hawks', nativeName: '福岡ソフトバンクホークス', league: 'NPB', division: 'Pacific League' },
-  'F':  { id: 3008, abbrev: 'F',  name: 'Hokkaido Nippon-Ham Fighters', nativeName: '北海道日本ハムファイターズ', league: 'NPB', division: 'Pacific League' },
-  'M':  { id: 3009, abbrev: 'M',  name: 'Chiba Lotte Marines', nativeName: '千葉ロッテマリーンズ', league: 'NPB', division: 'Pacific League' },
-  'E':  { id: 3010, abbrev: 'E',  name: 'Tohoku Rakuten Golden Eagles', nativeName: '東北楽天ゴールデンイーグルス', league: 'NPB', division: 'Pacific League' },
-  'B':  { id: 3011, abbrev: 'B',  name: 'ORIX Buffaloes', nativeName: 'オリックス・バファローズ', league: 'NPB', division: 'Pacific League' },
-  'L':  { id: 3012, abbrev: 'L',  name: 'Saitama Seibu Lions', nativeName: '埼玉西武ライオンズ', league: 'NPB', division: 'Pacific League' }
+  'H':  { id: 3007, abbrev: 'SBH',  name: 'Fukuoka SoftBank Hawks', nativeName: '福岡ソフトバンクホークス', league: 'NPB', division: 'Pacific League' },
+  'F':  { id: 3008, abbrev: 'NHF',  name: 'Hokkaido Nippon-Ham Fighters', nativeName: '北海道日本ハムファイターズ', league: 'NPB', division: 'Pacific League' },
+  'M':  { id: 3009, abbrev: 'LOT',  name: 'Chiba Lotte Marines', nativeName: '千葉ロッテマリーンズ', league: 'NPB', division: 'Pacific League' },
+  'E':  { id: 3010, abbrev: 'RAK',  name: 'Tohoku Rakuten Golden Eagles', nativeName: '東北楽天ゴールデンイーグルス', league: 'NPB', division: 'Pacific League' },
+  'B':  { id: 3011, abbrev: 'ORX',  name: 'ORIX Buffaloes', nativeName: 'オリックス・バファローズ', league: 'NPB', division: 'Pacific League' },
+  'L':  { id: 3012, abbrev: 'SEI',  name: 'Saitama Seibu Lions', nativeName: '埼玉西武ライオンズ', league: 'NPB', division: 'Pacific League' }
 };
 
-// Aliases for full names or common alternative notations
+// Aliases for full names, canonical abbreviations, or common alternative notations
 export const NPB_ALIASES = {
+  'YOM': 3001,
   'GIANTS': 3001,
   'YOMIURI': 3001,
+  'HAN': 3002,
   'TIGERS': 3002,
   'HANSHIN': 3002,
-  'BAYSTARS': 3003,
   'DENA': 3003,
+  'BAYSTARS': 3003,
   'YOKOHAMA': 3003,
+  'HIR': 3004,
   'CARP': 3004,
   'HIROSHIMA': 3004,
+  'CHU': 3005,
   'DRAGONS': 3005,
   'CHUNICHI': 3005,
+  'YAK': 3006,
   'SWALLOWS': 3006,
   'YAKULT': 3006,
+  'SBH': 3007,
   'HAWKS': 3007,
   'SOFTBANK': 3007,
+  'NHF': 3008,
   'FIGHTERS': 3008,
   'NIPPON-HAM': 3008,
   'NIPPONHAM': 3008,
+  'LOT': 3009,
   'MARINES': 3009,
   'LOTTE': 3009,
+  'RAK': 3010,
   'EAGLES': 3010,
   'RAKUTEN': 3010,
+  'ORX': 3011,
   'BUFFALOES': 3011,
   'ORIX': 3011,
+  'SEI': 3012,
   'LIONS': 3012,
   'SEIBU': 3012
 };
@@ -152,6 +163,9 @@ async function fetchMonthHtml(season, month, options = {}) {
   });
 
   if (!response.ok) {
+    if (response.status === 404 && month === '11') {
+      return '';
+    }
     throw new Error(`NPB server HTTP error ${response.status}: ${response.statusText}`);
   }
 
@@ -198,16 +212,22 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
     // Parse games inside this day cell
     // Format 1 (Completed / Final or Postponed with link):
     // <div><a href="/bis/eng/2026/games/s2026032701085.html">G 3 - 1 T</a></div>
-    // or <div><a href="/bis/eng/2026/games/s2026040101097.html">S * - * C</a></div>
-    const linkGameRegex = /<a[^>]*href=["'][^"']*\/games\/s(\d+)\.html["'][^>]*>\s*([A-Za-z]+)\s+([\d*]+)\s*-\s*([\d*]+)\s+([A-Za-z]+)\s*<\/a>/gi;
+    // or with stage marker: <div class="tescheaten">CS First Stage</div><div><a ...>...</a></div>
+    const linkGameRegex = /(?:<div class=["']tescheaten["'][^>]*>([^<]+)<\/div>\s*)?(?:<div>)?\s*<a[^>]*href=["'][^"']*\/games\/s(\d+)\.html["'][^>]*>\s*([A-Za-z]+)\s+([\d*]+)\s*-\s*([\d*]+)\s+([A-Za-z]+)\s*<\/a>/gi;
     let gameMatch;
 
     while ((gameMatch = linkGameRegex.exec(cellContent)) !== null) {
-      const gameId = gameMatch[1];
-      const rawAway = gameMatch[2];
-      const awayScoreStr = gameMatch[3];
-      const homeScoreStr = gameMatch[4];
-      const rawHome = gameMatch[5];
+      const specialStage = gameMatch[1];
+      const gameId = gameMatch[2];
+      const rawAway = gameMatch[3];
+      const awayScoreStr = gameMatch[4];
+      const homeScoreStr = gameMatch[5];
+      const rawHome = gameMatch[6];
+
+      // Skip non-regular season games (All-Star Games, Climax Series, Nippon Series)
+      if (specialStage) {
+        continue;
+      }
 
       // Skip NPB All-Star Games (CL vs PL exhibition)
       if ((rawAway === 'CL' && rawHome === 'PL') || (rawAway === 'PL' && rawHome === 'CL')) {
@@ -276,13 +296,14 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
 
     // Format 2 (Future scheduled game without link):
     // <div>C - DB 18:00</div>
-    const scheduledRegex = /<div>\s*([A-Za-z]+)\s*-\s*([A-Za-z]+)\s+(\d{1,2}:\d{2})\s*<\/div>/gi;
+    const scheduledRegex = /(?:<div class=["']tescheaten["'][^>]*>([^<]+)<\/div>\s*)?<div>\s*([A-Za-z]+)\s*-\s*([A-Za-z]+)\s+(\d{1,2}:\d{2})\s*<\/div>/gi;
     let schedMatch;
 
     while ((schedMatch = scheduledRegex.exec(cellContent)) !== null) {
-      const rawAway = schedMatch[1];
-      const rawHome = schedMatch[2];
-      const gameTime = schedMatch[3];
+      if (schedMatch[1]) continue; // Skip non-regular season
+      const rawAway = schedMatch[2];
+      const rawHome = schedMatch[3];
+      const gameTime = schedMatch[4];
 
       const awayTeam = resolveNpbTeam(rawAway);
       const homeTeam = resolveNpbTeam(rawHome);
@@ -329,13 +350,16 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
   const { forceRefresh = false } = options;
   console.log(`🇯🇵 Compiling NPB ${season} Regular Season Data...`);
 
-  // Months active in NPB regular season (04 = Mar/Apr, 05 = May, 06 = Jun, 07 = Jul, 08 = Aug, 09 = Sep, 10 = Oct)
-  const months = ['04', '05', '06', '07', '08', '09', '10'];
+  // Months active in NPB regular season (04 = Mar/Apr, 05 = May, 06 = Jun, 07 = Jul, 08 = Aug, 09 = Sep, 10 = Oct, 11 = Nov for Olympic-delayed seasons)
+  const months = ['04', '05', '06', '07', '08', '09', '10', '11'];
   const allGames = [];
 
   for (const month of months) {
     try {
       const html = await fetchMonthHtml(season, month, { forceRefresh });
+      if (!html) {
+        continue;
+      }
       const monthGames = parseNpbCalendarHtml(html, season, month);
       console.log(`  Month ${month}: parsed ${monthGames.length} games`);
       allGames.push(...monthGames);
@@ -366,41 +390,50 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
   console.log(`   Final Games Completed: ${finalGames.length}`);
   console.log(`   Tie Games: ${tieGames.length}`);
 
-  // Summary per team
+  // Summary per team by division
   const teamRecords = {};
   finalGames.forEach(g => {
     const home = g.teams.home;
     const away = g.teams.away;
 
-    if (!teamRecords[home.team.name]) teamRecords[home.team.name] = { w: 0, l: 0, t: 0, div: home.team.division };
-    if (!teamRecords[away.team.name]) teamRecords[away.team.name] = { w: 0, l: 0, t: 0, div: away.team.division };
+    if (!teamRecords[home.team.id]) {
+      teamRecords[home.team.id] = { name: home.team.name, division: home.team.division, w: 0, l: 0, t: 0 };
+    }
+    if (!teamRecords[away.team.id]) {
+      teamRecords[away.team.id] = { name: away.team.name, division: away.team.division, w: 0, l: 0, t: 0 };
+    }
 
     if (g.isTie) {
-      teamRecords[home.team.name].t += 1;
-      teamRecords[away.team.name].t += 1;
+      teamRecords[home.team.id].t += 1;
+      teamRecords[away.team.id].t += 1;
     } else if (home.isWinner) {
-      teamRecords[home.team.name].w += 1;
-      teamRecords[away.team.name].l += 1;
+      teamRecords[home.team.id].w += 1;
+      teamRecords[away.team.id].l += 1;
     } else if (away.isWinner) {
-      teamRecords[away.team.name].w += 1;
-      teamRecords[home.team.name].l += 1;
+      teamRecords[away.team.id].w += 1;
+      teamRecords[home.team.id].l += 1;
     }
   });
 
-  ['Central League', 'Pacific League'].forEach(division => {
-    console.log(`\n🏆 ${division} Standings (W-L-T):`);
-    Object.entries(teamRecords)
-      .filter(([, rec]) => rec.div === division)
-      .sort(([, a], [, b]) => {
+  const centralTeams = Object.values(teamRecords).filter(t => t.division === 'Central League');
+  const pacificTeams = Object.values(teamRecords).filter(t => t.division === 'Pacific League');
+
+  const printDivision = (title, teams) => {
+    console.log(`\n🏆 ${title} Standings (W-L-T):`);
+    teams
+      .sort((a, b) => {
         const pctA = (a.w + a.l) > 0 ? a.w / (a.w + a.l) : 0;
         const pctB = (b.w + b.l) > 0 ? b.w / (b.w + b.l) : 0;
         return pctB - pctA;
       })
-      .forEach(([team, rec], idx) => {
-        const pct = (rec.w + rec.l) > 0 ? (rec.w / (rec.w + rec.l)).toFixed(3) : '.000';
-        console.log(`   ${String(idx + 1).padStart(2, ' ')}. ${team.padEnd(28, ' ')} ${rec.w}-${rec.l}-${rec.t}  (${pct})`);
+      .forEach((t, idx) => {
+        const pct = (t.w + t.l) > 0 ? (t.w / (t.w + t.l)).toFixed(3) : '.000';
+        console.log(`   ${String(idx + 1).padStart(2, ' ')}. ${t.name.padEnd(28, ' ')} ${t.w}-${t.l}-${t.t}  (${pct})`);
       });
-  });
+  };
+
+  printDivision('Central League', centralTeams);
+  printDivision('Pacific League', pacificTeams);
 
   // Target paths (supports both standalone scraper repo and full web app repo)
   const targets = [];
@@ -471,19 +504,28 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
 // CLI Execution entry point
 if (process.argv[1] && process.argv[1].endsWith('scrapeNPB.js')) {
   const args = process.argv.slice(2);
-  let season = '2026';
+  let seasons = ['2026'];
   let forceRefresh = false;
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--season' && args[i + 1]) {
-      season = args[i + 1];
+      seasons = [args[i + 1]];
       i++;
+    } else if (args[i] === '--seasons' && args[i + 1]) {
+      seasons = args[i + 1].split(',').map(s => s.trim()).filter(Boolean);
+      i++;
+    } else if (args[i] === '--all') {
+      seasons = ['2021', '2022', '2023', '2024', '2025', '2026'];
     } else if (args[i] === '--force' || args[i] === '--no-cache') {
       forceRefresh = true;
     }
   }
 
-  scrapeNpbSeason(season, { forceRefresh })
+  (async () => {
+    for (const yr of seasons) {
+      await scrapeNpbSeason(yr, { forceRefresh });
+    }
+  })()
     .then(() => {
       console.log('\n✅ NPB data extraction complete.');
       process.exit(0);

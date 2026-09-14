@@ -27407,80 +27407,12 @@
     "isTie": false
   },
   {
-    "gamePk": "20260914_DeNA_YOM",
+    "gamePk": "2026091401937",
     "gameDate": "2026-09-14T18:00:00+09:00",
     "officialDate": "2026-09-14",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3001,
-          "name": "Yomiuri Giants",
-          "abbrev": "YOM",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260914_HAN_CHU",
-    "gameDate": "2026-09-14T18:00:00+09:00",
-    "officialDate": "2026-09-14",
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3005,
-          "name": "Chunichi Dragons",
-          "abbrev": "CHU",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260914_YAK_HIR",
-    "gameDate": "2026-09-14T18:00:00+09:00",
-    "officialDate": "2026-09-14",
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -27491,7 +27423,7 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 0,
         "isWinner": false
       },
       "home": {
@@ -27502,7 +27434,75 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 3,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091401939",
+    "gameDate": "2026-09-14T18:00:00+09:00",
+    "officialDate": "2026-09-14",
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 0,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3005,
+          "name": "Chunichi Dragons",
+          "abbrev": "CHU",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 6,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091401945",
+    "gameDate": "2026-09-14T18:00:00+09:00",
+    "officialDate": "2026-09-14",
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 4,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
         "isWinner": false
       }
     },

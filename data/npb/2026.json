@@ -27713,12 +27713,12 @@
     "isTie": false
   },
   {
-    "gamePk": "20260916_LOT_RAK",
+    "gamePk": "2026091601796",
     "gameDate": "2026-09-16T18:00:00+09:00",
     "officialDate": "2026-09-16",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -27729,7 +27729,7 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 0,
         "isWinner": false
       },
       "home": {
@@ -27740,19 +27740,19 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 4,
+        "isWinner": true
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260916_ORX_SBH",
+    "gamePk": "2026091601797",
     "gameDate": "2026-09-16T18:00:00+09:00",
     "officialDate": "2026-09-16",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -27763,7 +27763,7 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 0,
         "isWinner": false
       },
       "home": {
@@ -27774,8 +27774,8 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 4,
+        "isWinner": true
       }
     },
     "isTie": false

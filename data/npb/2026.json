@@ -27781,80 +27781,12 @@
     "isTie": false
   },
   {
-    "gamePk": "20260917_HAN_HIR",
+    "gamePk": "2026091701798",
     "gameDate": "2026-09-17T18:00:00+09:00",
     "officialDate": "2026-09-17",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260917_LOT_RAK",
-    "gameDate": "2026-09-17T18:00:00+09:00",
-    "officialDate": "2026-09-17",
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3010,
-          "name": "Tohoku Rakuten Golden Eagles",
-          "abbrev": "RAK",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260917_NHF_SEI",
-    "gameDate": "2026-09-17T18:00:00+09:00",
-    "officialDate": "2026-09-17",
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -27865,8 +27797,8 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 4,
+        "isWinner": true
       },
       "home": {
         "team": {
@@ -27876,19 +27808,53 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 2,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260917_ORX_SBH",
+    "gamePk": "2026091701799",
     "gameDate": "2026-09-17T18:00:00+09:00",
     "officialDate": "2026-09-17",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 1,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3010,
+          "name": "Tohoku Rakuten Golden Eagles",
+          "abbrev": "RAK",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 5,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091701800",
+    "gameDate": "2026-09-17T18:00:00+09:00",
+    "officialDate": "2026-09-17",
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -27899,7 +27865,7 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 1,
         "isWinner": false
       },
       "home": {
@@ -27910,19 +27876,19 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 7,
+        "isWinner": true
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260917_YAK_DeNA",
+    "gamePk": "2026091701953",
     "gameDate": "2026-09-17T18:00:00+09:00",
     "officialDate": "2026-09-17",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -27933,7 +27899,7 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 1,
         "isWinner": false
       },
       "home": {
@@ -27944,7 +27910,41 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 2,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091701954",
+    "gameDate": "2026-09-17T18:00:00+09:00",
+    "officialDate": "2026-09-17",
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 7,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 2,
         "isWinner": false
       }
     },

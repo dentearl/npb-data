@@ -29620,80 +29620,12 @@
     "isTie": false
   },
   {
-    "gamePk": "20260928_DeNA_HIR",
+    "gamePk": "2026092801824",
     "gameDate": "2026-09-28T18:00:00+09:00",
     "officialDate": "2026-09-28",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260928_LOT_NHF",
-    "gameDate": "2026-09-28T18:00:00+09:00",
-    "officialDate": "2026-09-28",
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3008,
-          "name": "Hokkaido Nippon-Ham Fighters",
-          "abbrev": "NHF",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260928_SEI_RAK",
-    "gameDate": "2026-09-28T18:00:00+09:00",
-    "officialDate": "2026-09-28",
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -29704,7 +29636,7 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 2,
         "isWinner": false
       },
       "home": {
@@ -29715,8 +29647,76 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 4,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092801825",
+    "gameDate": "2026-09-28T18:00:00+09:00",
+    "officialDate": "2026-09-28",
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 3,
         "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "abbrev": "NHF",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 8,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092801962",
+    "gameDate": "2026-09-28T18:00:00+09:00",
+    "officialDate": "2026-09-28",
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 4,
+        "isWinner": true
       }
     },
     "isTie": false

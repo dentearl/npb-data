@@ -14,7 +14,7 @@ Available seasons: `2021`, `2022`, `2023`, `2024`, `2025`, `2026` (each season c
 ## Security & Architecture
 - **Zero Secrets / Zero Tokens**: Uses standard unauthenticated HTTP GET requests on the frontend and ephemeral, default `GITHUB_TOKEN` (`contents: write`) in GitHub Actions.
 - **Server Friendly**: Intelligent monthly caching prevents excessive requests to official NPB servers (`npb.jp`).
-- **Automated Nightly Run**: Scheduled via GitHub Actions daily at `15:30 UTC` (`00:30 JST`), shortly after night games finish.
+- **Automated Schedule**: Scheduled via GitHub Actions daily across 3 sweeps: `09:00 UTC` (`18:00 JST` for weekend day games), `13:45 UTC` (`22:45 JST` for night games), and `15:30 UTC` (`00:30 JST` late-night safety sweep).
 
 ## Manual Run
 ```bash

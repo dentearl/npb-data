@@ -29927,12 +29927,12 @@
     "isTie": false
   },
   {
-    "gamePk": "20261001_HAN_YOM",
+    "gamePk": "2026100101966",
     "gameDate": "2026-10-01T18:00:00+09:00",
     "officialDate": "2026-10-01",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -29943,7 +29943,7 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 2,
         "isWinner": false
       },
       "home": {
@@ -29954,19 +29954,19 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 2,
         "isWinner": false
       }
     },
-    "isTie": false
+    "isTie": true
   },
   {
-    "gamePk": "20261001_HIR_CHU",
+    "gamePk": "2026100101967",
     "gameDate": "2026-10-01T18:00:00+09:00",
     "officialDate": "2026-10-01",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -29977,8 +29977,8 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 5,
+        "isWinner": true
       },
       "home": {
         "team": {
@@ -29988,53 +29988,19 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 1,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20261001_LOT_NHF",
+    "gamePk": "2026100101971",
     "gameDate": "2026-10-01T18:00:00+09:00",
     "officialDate": "2026-10-01",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3008,
-          "name": "Hokkaido Nippon-Ham Fighters",
-          "abbrev": "NHF",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20261001_RAK_SBH",
-    "gameDate": "2026-10-01T18:00:00+09:00",
-    "officialDate": "2026-10-01",
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30045,7 +30011,7 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 2,
         "isWinner": false
       },
       "home": {
@@ -30056,8 +30022,42 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 8,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026100101981",
+    "gameDate": "2026-10-01T18:00:00+09:00",
+    "officialDate": "2026-10-01",
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 1,
         "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "abbrev": "NHF",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 3,
+        "isWinner": true
       }
     },
     "isTie": false

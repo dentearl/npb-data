@@ -30301,46 +30301,12 @@
     "isTie": false
   },
   {
-    "gamePk": "20261004_DeNA_HAN",
+    "gamePk": "2026100401975",
     "gameDate": "2026-10-04T18:00:00+09:00",
     "officialDate": "2026-10-04",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20261004_LOT_RAK",
-    "gameDate": "2026-10-04T18:00:00+09:00",
-    "officialDate": "2026-10-04",
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30351,8 +30317,8 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 3,
+        "isWinner": true
       },
       "home": {
         "team": {
@@ -30362,19 +30328,19 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 2,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20261004_YAK_HIR",
+    "gamePk": "2026100401978",
     "gameDate": "2026-10-04T18:00:00+09:00",
     "officialDate": "2026-10-04",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30385,7 +30351,7 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 4,
         "isWinner": false
       },
       "home": {
@@ -30396,7 +30362,41 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 7,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026100401979",
+    "gameDate": "2026-10-04T18:00:00+09:00",
+    "officialDate": "2026-10-04",
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 2,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
         "isWinner": false
       }
     },

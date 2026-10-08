@@ -30573,12 +30573,12 @@
     "isTie": false
   },
   {
-    "gamePk": "20261008_HAN_YAK",
+    "gamePk": "2026100801989",
     "gameDate": "2026-10-08T18:00:00+09:00",
     "officialDate": "2026-10-08",
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30589,7 +30589,7 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 0,
         "isWinner": false
       },
       "home": {
@@ -30600,8 +30600,8 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 4,
+        "isWinner": true
       }
     },
     "isTie": false

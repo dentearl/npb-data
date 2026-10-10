@@ -30605,5 +30605,73 @@
       }
     },
     "isTie": false
+  },
+  {
+    "gamePk": "20261011_SEI_NHF",
+    "gameDate": "2026-10-11T14:00:00+09:00",
+    "officialDate": "2026-10-11",
+    "status": {
+      "detailedState": "Scheduled",
+      "abstractGameState": "P"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3012,
+          "name": "Saitama Seibu Lions",
+          "abbrev": "SEI",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": null,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "abbrev": "NHF",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": null,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "20261011_YOM_DeNA",
+    "gameDate": "2026-10-11T14:00:00+09:00",
+    "officialDate": "2026-10-11",
+    "status": {
+      "detailedState": "Scheduled",
+      "abstractGameState": "P"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": null,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": null,
+        "isWinner": false
+      }
+    },
+    "isTie": false
   }
 ]

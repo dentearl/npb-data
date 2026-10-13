@@ -6,10 +6,13 @@
  * (including tie/draw games and cancellations), and outputs production-grade JSON
  * for the baseball division race visualization.
  * 
- * Includes intelligent caching to prevent excessive network requests to NPB servers:
- * - Completed past months are cached permanently.
- * - Active / future months are cached with a configurable TTL (default 6 hours).
- * - Only writes output files when a genuine data diff is detected.
+ * 
+ * ARCHITECTURAL CONSTRAINT FOR AI AGENTS & DEVELOPERS:
+ * This scraper script is intentionally 100% self-contained with ZERO internal repository imports.
+ * It must ONLY import Node.js built-ins (node:fs, node:path, node:url).
+ * DO NOT import from ../src/ or couple this script to frontend constants.
+ * It is deployed and executed independently in standalone scraper repositories (e.g. npb-data-repo).
+ * Parity between NPB_TEAM_MAPPING and src/constants/npbTeams.js is enforced by tests/scraperConsistency.test.js.
  */
 
 import fs from 'node:fs';
@@ -177,7 +180,7 @@ async function fetchMonthHtml(season, month, options = {}) {
 /**
  * Parses raw NPB calendar HTML table into normalized game objects
  */
-export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01') {
+export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01', options = {}) {
   const games = [];
 
   // Each calendar day is represented inside <td class="stschedule"...> or <td> ... </td>
@@ -224,8 +227,8 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
       const homeScoreStr = gameMatch[5];
       const rawHome = gameMatch[6];
 
-      // Skip non-regular season games (All-Star Games, Climax Series, Nippon Series)
-      if (specialStage) {
+      // Skip non-regular season games unless includePostseason is requested
+      if (specialStage && !options.includePostseason) {
         continue;
       }
 
@@ -248,6 +251,7 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
           gamePk: gameId,
           gameDate: `${officialDate}T18:00:00+09:00`,
           officialDate,
+          stage: specialStage || null,
           status: { detailedState: 'Postponed', abstractGameState: 'F' },
           teams: {
             away: {
@@ -277,6 +281,7 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
         gamePk: gameId,
         gameDate: `${officialDate}T18:00:00+09:00`,
         officialDate,
+        stage: specialStage || null,
         status: { detailedState: 'Final', abstractGameState: 'F' },
         teams: {
           away: {
@@ -300,7 +305,7 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
     let schedMatch;
 
     while ((schedMatch = scheduledRegex.exec(cellContent)) !== null) {
-      if (schedMatch[1]) continue; // Skip non-regular season
+      if (schedMatch[1] && !options.includePostseason) continue; // Skip non-regular season unless requested
       const rawAway = schedMatch[2];
       const rawHome = schedMatch[3];
       const gameTime = schedMatch[4];
@@ -319,6 +324,7 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
           gamePk: gameId,
           gameDate: `${officialDate}T${gameTime}:00+09:00`,
           officialDate,
+          stage: schedMatch[1] || null,
           status: { detailedState: 'Scheduled', abstractGameState: 'P' },
           teams: {
             away: {
@@ -344,6 +350,377 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
 export const parseNpbCalendarHTML = parseNpbCalendarHtml;
 
 /**
+ * Default fallback 2026 NPB postseason data for offline execution.
+ */
+export function getDefault2026NpbPostseasonData() {
+  return {
+    '2026': {
+      era: 'climax_series',
+      isStarted: false,
+      isComplete: false,
+      CL: {
+        seeds: {
+          1: { id: 3002, name: 'Hanshin Tigers', shortName: 'Tigers' },
+          2: { id: 3001, name: 'Yomiuri Giants', shortName: 'Giants' },
+          3: { id: 3003, name: 'Yokohama DeNA BayStars', shortName: 'BayStars' }
+        },
+        firstStage: {
+          name: 'Central League First Stage',
+          format: 'Best of 3',
+          team2: { id: 3001, name: 'Yomiuri Giants', shortName: 'Giants', wins: 0, isWinner: false, isEliminated: false },
+          team3: { id: 3003, name: 'Yokohama DeNA BayStars', shortName: 'BayStars', wins: 0, isWinner: false, isEliminated: false },
+          isStarted: false,
+          isComplete: false,
+          games: [
+            { game: 1, date: '2026-10-10', away: 'Yokohama DeNA BayStars', home: 'Yomiuri Giants' },
+            { game: 2, date: '2026-10-11', away: 'Yokohama DeNA BayStars', home: 'Yomiuri Giants' },
+            { game: 3, date: '2026-10-12', away: 'Yokohama DeNA BayStars', home: 'Yomiuri Giants', ifNeeded: true }
+          ]
+        },
+        finalStage: {
+          name: 'Central League Final Stage',
+          format: 'Best of 6 (+1 Adv)',
+          team1: { id: 3002, name: 'Hanshin Tigers', shortName: 'Tigers', wins: 1, isWinner: false, isEliminated: false, hasAdvantage: true },
+          adv: { name: 'First Stage Winner', shortName: 'First Winner', wins: 0, isWinner: false, isEliminated: false },
+          isStarted: false,
+          isComplete: false,
+          games: [
+            { game: 1, date: '2026-10-14', away: 'First Stage Winner', home: 'Hanshin Tigers' },
+            { game: 2, date: '2026-10-15', away: 'First Stage Winner', home: 'Hanshin Tigers' },
+            { game: 3, date: '2026-10-16', away: 'First Stage Winner', home: 'Hanshin Tigers' },
+            { game: 4, date: '2026-10-17', away: 'First Stage Winner', home: 'Hanshin Tigers', ifNeeded: true },
+            { game: 5, date: '2026-10-18', away: 'First Stage Winner', home: 'Hanshin Tigers', ifNeeded: true },
+            { game: 6, date: '2026-10-19', away: 'First Stage Winner', home: 'Hanshin Tigers', ifNeeded: true }
+          ]
+        },
+        pennantWinner: null
+      },
+      PL: {
+        seeds: {
+          1: { id: 3007, name: 'Fukuoka SoftBank Hawks', shortName: 'Hawks' },
+          2: { id: 3012, name: 'Saitama Seibu Lions', shortName: 'Lions' },
+          3: { id: 3008, name: 'Hokkaido Nippon-Ham Fighters', shortName: 'Fighters' }
+        },
+        firstStage: {
+          name: 'Pacific League First Stage',
+          format: 'Best of 3',
+          team2: { id: 3012, name: 'Saitama Seibu Lions', shortName: 'Lions', wins: 0, isWinner: false, isEliminated: false },
+          team3: { id: 3008, name: 'Hokkaido Nippon-Ham Fighters', shortName: 'Fighters', wins: 0, isWinner: false, isEliminated: false },
+          isStarted: false,
+          isComplete: false,
+          games: [
+            { game: 1, date: '2026-10-10', away: 'Hokkaido Nippon-Ham Fighters', home: 'Saitama Seibu Lions' },
+            { game: 2, date: '2026-10-11', away: 'Hokkaido Nippon-Ham Fighters', home: 'Saitama Seibu Lions' },
+            { game: 3, date: '2026-10-12', away: 'Hokkaido Nippon-Ham Fighters', home: 'Saitama Seibu Lions', ifNeeded: true }
+          ]
+        },
+        finalStage: {
+          name: 'Pacific League Final Stage',
+          format: 'Best of 6 (+1 Adv)',
+          team1: { id: 3007, name: 'Fukuoka SoftBank Hawks', shortName: 'Hawks', wins: 1, isWinner: false, isEliminated: false, hasAdvantage: true },
+          adv: { name: 'First Stage Winner', shortName: 'First Winner', wins: 0, isWinner: false, isEliminated: false },
+          isStarted: false,
+          isComplete: false,
+          games: [
+            { game: 1, date: '2026-10-14', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks' },
+            { game: 2, date: '2026-10-15', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks' },
+            { game: 3, date: '2026-10-16', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks' },
+            { game: 4, date: '2026-10-17', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
+            { game: 5, date: '2026-10-18', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
+            { game: 6, date: '2026-10-19', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true }
+          ]
+        },
+        pennantWinner: null
+      },
+      japanSeries: {
+        name: 'Japan Series',
+        format: 'Best of 7',
+        clTeam: { name: 'Central League Champion', shortName: 'CL Champ', wins: 0, isWinner: false },
+        plTeam: { name: 'Pacific League Champion', shortName: 'PL Champ', wins: 0, isWinner: false },
+        isStarted: false,
+        isComplete: false,
+        games: [
+          { game: 1, date: '2026-10-24', away: 'Pacific League Champion', home: 'Central League Champion' },
+          { game: 2, date: '2026-10-25', away: 'Pacific League Champion', home: 'Central League Champion' },
+          { game: 3, date: '2026-10-27', away: 'Central League Champion', home: 'Pacific League Champion' },
+          { game: 4, date: '2026-10-28', away: 'Central League Champion', home: 'Pacific League Champion' },
+          { game: 5, date: '2026-10-29', away: 'Central League Champion', home: 'Pacific League Champion', ifNeeded: true },
+          { game: 6, date: '2026-10-31', away: 'Pacific League Champion', home: 'Central League Champion', ifNeeded: true },
+          { game: 7, date: '2026-11-01', away: 'Pacific League Champion', home: 'Central League Champion', ifNeeded: true }
+        ]
+      }
+    }
+  };
+}
+
+/**
+ * Builds structured NPB postseason series from playoff events.
+ */
+export function parseNpbPostseason(postseasonGames = [], _regularSeasonGames = [], season = '2026') {
+  const sStr = String(season);
+  const baseData = getDefault2026NpbPostseasonData();
+  const seasonPostseason = baseData[sStr] || baseData['2026'];
+
+  if (!Array.isArray(postseasonGames) || postseasonGames.length === 0) {
+    return baseData;
+  }
+
+  const clFirstGames = [];
+  const clFinalGames = [];
+  const plFirstGames = [];
+  const plFinalGames = [];
+  const jsGames = [];
+
+  postseasonGames.forEach(g => {
+    const rawStage = (g.stage || g.series || '').toLowerCase();
+    const rawAway = g.away || g.teams?.away?.team?.name || '';
+    const rawHome = g.home || g.teams?.home?.team?.name || '';
+    const awayTeam = resolveNpbTeam(rawAway);
+    const homeTeam = resolveNpbTeam(rawHome);
+    const isCentral = (awayTeam && awayTeam.division === 'Central League') || (homeTeam && homeTeam.division === 'Central League') || (g.league && g.league.includes('Central'));
+    const isPacific = (awayTeam && awayTeam.division === 'Pacific League') || (homeTeam && homeTeam.division === 'Pacific League') || (g.league && g.league.includes('Pacific'));
+
+    if (rawStage.includes('japan') || rawStage.includes('nippon') || (isCentral && isPacific)) {
+      jsGames.push(g);
+    } else if (rawStage.includes('first') || rawStage.includes('1st')) {
+      if (isCentral) clFirstGames.push(g);
+      else if (isPacific) plFirstGames.push(g);
+      else clFirstGames.push(g);
+    } else if (rawStage.includes('final')) {
+      if (isCentral) clFinalGames.push(g);
+      else if (isPacific) plFinalGames.push(g);
+      else clFinalGames.push(g);
+    } else {
+      if (isCentral) clFirstGames.push(g);
+      else if (isPacific) plFirstGames.push(g);
+      else jsGames.push(g);
+    }
+  });
+
+  function processSeries(seriesObj, gamesList, winsNeeded, hasAdvantage = false) {
+    if (!seriesObj || !Array.isArray(gamesList) || gamesList.length === 0) return;
+
+    // Check if any games in this series have actually started or completed
+    const hasStarted = gamesList.some(g =>
+      Boolean(
+        g.isFinal ||
+        (g.status && (g.status.detailedState === 'Final' || g.status.abstractGameState === 'F')) ||
+        (typeof g.awayScore === 'number' && typeof g.homeScore === 'number') ||
+        (typeof g.teams?.away?.score === 'number' && typeof g.teams?.home?.score === 'number')
+      )
+    );
+    if (!hasStarted) {
+      seriesObj.isStarted = false;
+      return;
+    }
+
+    seriesObj.isStarted = true;
+    const parsedGames = [];
+    let winsTop = hasAdvantage ? 1 : 0;
+    let winsBot = 0;
+
+    gamesList.forEach((g, idx) => {
+      const rawAway = g.away || g.teams?.away?.team?.name || '';
+      const rawHome = g.home || g.teams?.home?.team?.name || '';
+      const awayTeam = resolveNpbTeam(rawAway);
+      const homeTeam = resolveNpbTeam(rawHome);
+      const awayName = awayTeam?.name || (typeof g.away === 'string' ? g.away : 'Away');
+      const homeName = homeTeam?.name || (typeof g.home === 'string' ? g.home : 'Home');
+      const awayScore = typeof g.awayScore === 'number' ? g.awayScore : (g.teams?.away?.score ?? null);
+      const homeScore = typeof g.homeScore === 'number' ? g.homeScore : (g.teams?.home?.score ?? null);
+      const isFinal = Boolean(g.isFinal || (g.status && (g.status.detailedState === 'Final' || g.status.abstractGameState === 'F')));
+
+      let winnerId = null;
+      if (isFinal && awayScore !== null && homeScore !== null) {
+        if (awayScore > homeScore) {
+          winnerId = awayTeam?.id || null;
+        } else if (homeScore > awayScore) {
+          winnerId = homeTeam?.id || null;
+        }
+      } else if (g.winnerId) {
+        winnerId = g.winnerId;
+      }
+
+      parsedGames.push({
+        game: idx + 1,
+        date: g.officialDate || g.date,
+        away: awayName,
+        home: homeName,
+        awayScore,
+        homeScore,
+        winnerId,
+        isFinal
+      });
+
+      const topId = seriesObj.team1?.id || seriesObj.team2?.id || seriesObj.clTeam?.id;
+      const botId = seriesObj.adv?.id || seriesObj.team3?.id || seriesObj.plTeam?.id;
+
+      if (winnerId && topId && winnerId === topId) winsTop++;
+      else if (winnerId && botId && winnerId === botId) winsBot++;
+      else if (winnerId && awayTeam && winnerId === awayTeam.id) winsBot++;
+      else if (winnerId && homeTeam && winnerId === homeTeam.id) winsTop++;
+    });
+
+    seriesObj.games = parsedGames;
+    if (seriesObj.team1) seriesObj.team1.wins = winsTop;
+    if (seriesObj.team2) seriesObj.team2.wins = winsTop;
+    if (seriesObj.clTeam) seriesObj.clTeam.wins = winsTop;
+
+    if (seriesObj.adv) seriesObj.adv.wins = winsBot;
+    if (seriesObj.team3) seriesObj.team3.wins = winsBot;
+    if (seriesObj.plTeam) seriesObj.plTeam.wins = winsBot;
+
+    if (winsTop >= winsNeeded) {
+      seriesObj.isComplete = true;
+      seriesObj.winnerId = seriesObj.team1?.id || seriesObj.team2?.id || seriesObj.clTeam?.id;
+      if (seriesObj.team1) seriesObj.team1.isWinner = true;
+      if (seriesObj.team2) seriesObj.team2.isWinner = true;
+      if (seriesObj.clTeam) seriesObj.clTeam.isWinner = true;
+      if (seriesObj.adv) seriesObj.adv.isEliminated = true;
+      if (seriesObj.team3) seriesObj.team3.isEliminated = true;
+      if (seriesObj.plTeam) seriesObj.plTeam.isEliminated = true;
+    } else if (winsBot >= winsNeeded) {
+      seriesObj.isComplete = true;
+      seriesObj.winnerId = seriesObj.adv?.id || seriesObj.team3?.id || seriesObj.plTeam?.id;
+      if (seriesObj.adv) seriesObj.adv.isWinner = true;
+      if (seriesObj.team3) seriesObj.team3.isWinner = true;
+      if (seriesObj.plTeam) seriesObj.plTeam.isWinner = true;
+      if (seriesObj.team1) seriesObj.team1.isEliminated = true;
+      if (seriesObj.team2) seriesObj.team2.isEliminated = true;
+      if (seriesObj.clTeam) seriesObj.clTeam.isEliminated = true;
+    }
+  }
+
+  processSeries(seasonPostseason.CL.firstStage, clFirstGames, 2, false);
+  processSeries(seasonPostseason.PL.firstStage, plFirstGames, 2, false);
+
+  // Advance First Stage winners into Final Stage
+  if (seasonPostseason.CL?.firstStage?.isComplete && seasonPostseason.CL.firstStage.winnerId) {
+    const wId = seasonPostseason.CL.firstStage.winnerId;
+    const fs = seasonPostseason.CL.firstStage;
+    const winnerTeam = (fs.team3?.id === wId) ? fs.team3 : ((fs.team2?.id === wId) ? fs.team2 : null);
+    if (winnerTeam && seasonPostseason.CL.finalStage) {
+      seasonPostseason.CL.finalStage.adv = {
+        id: winnerTeam.id,
+        name: winnerTeam.name,
+        shortName: winnerTeam.shortName || winnerTeam.name,
+        wins: 0,
+        isWinner: false,
+        isEliminated: false
+      };
+      if (Array.isArray(seasonPostseason.CL.finalStage.games)) {
+        seasonPostseason.CL.finalStage.games.forEach(g => {
+          if (g.away === 'First Stage Winner' || g.away === 'First Winner') {
+            g.away = winnerTeam.name;
+          }
+        });
+      }
+    }
+  }
+
+  if (seasonPostseason.PL?.firstStage?.isComplete && seasonPostseason.PL.firstStage.winnerId) {
+    const wId = seasonPostseason.PL.firstStage.winnerId;
+    const fs = seasonPostseason.PL.firstStage;
+    const winnerTeam = (fs.team3?.id === wId) ? fs.team3 : ((fs.team2?.id === wId) ? fs.team2 : null);
+    if (winnerTeam && seasonPostseason.PL.finalStage) {
+      seasonPostseason.PL.finalStage.adv = {
+        id: winnerTeam.id,
+        name: winnerTeam.name,
+        shortName: winnerTeam.shortName || winnerTeam.name,
+        wins: 0,
+        isWinner: false,
+        isEliminated: false
+      };
+      if (Array.isArray(seasonPostseason.PL.finalStage.games)) {
+        seasonPostseason.PL.finalStage.games.forEach(g => {
+          if (g.away === 'First Stage Winner' || g.away === 'First Winner') {
+            g.away = winnerTeam.name;
+          }
+        });
+      }
+    }
+  }
+
+  processSeries(seasonPostseason.CL.finalStage, clFinalGames, 4, true);
+  processSeries(seasonPostseason.PL.finalStage, plFinalGames, 4, true);
+
+  // If Final Stage completes, advance pennant winner / league champ into Japan Series
+  if (seasonPostseason.CL?.finalStage?.isComplete && seasonPostseason.CL.finalStage.winnerId) {
+    const wId = seasonPostseason.CL.finalStage.winnerId;
+    const fs = seasonPostseason.CL.finalStage;
+    const winnerTeam = (fs.team1?.id === wId) ? fs.team1 : ((fs.adv?.id === wId) ? fs.adv : null);
+    if (winnerTeam) {
+      seasonPostseason.CL.pennantWinner = winnerTeam;
+      if (seasonPostseason.japanSeries?.clTeam) {
+        seasonPostseason.japanSeries.clTeam = {
+          id: winnerTeam.id,
+          name: winnerTeam.name,
+          shortName: winnerTeam.shortName || winnerTeam.name,
+          wins: 0,
+          isWinner: false
+        };
+      }
+    }
+  }
+
+  if (seasonPostseason.PL?.finalStage?.isComplete && seasonPostseason.PL.finalStage.winnerId) {
+    const wId = seasonPostseason.PL.finalStage.winnerId;
+    const fs = seasonPostseason.PL.finalStage;
+    const winnerTeam = (fs.team1?.id === wId) ? fs.team1 : ((fs.adv?.id === wId) ? fs.adv : null);
+    if (winnerTeam) {
+      seasonPostseason.PL.pennantWinner = winnerTeam;
+      if (seasonPostseason.japanSeries?.plTeam) {
+        seasonPostseason.japanSeries.plTeam = {
+          id: winnerTeam.id,
+          name: winnerTeam.name,
+          shortName: winnerTeam.shortName || winnerTeam.name,
+          wins: 0,
+          isWinner: false
+        };
+      }
+    }
+  }
+
+  processSeries(seasonPostseason.japanSeries, jsGames, 4, false);
+
+  seasonPostseason.isStarted = Boolean(
+    seasonPostseason.CL?.firstStage?.isStarted ||
+    seasonPostseason.PL?.firstStage?.isStarted ||
+    seasonPostseason.CL?.finalStage?.isStarted ||
+    seasonPostseason.PL?.finalStage?.isStarted ||
+    seasonPostseason.japanSeries?.isStarted
+  );
+  seasonPostseason.isComplete = Boolean(
+    seasonPostseason.japanSeries?.isComplete
+  );
+
+  return { [sStr]: seasonPostseason };
+}
+
+/**
+ * Updates NPB_POSTSEASON_DATA in src/constants/postseasonSeriesData.js with fresh results
+ */
+export function updateNpbPostseasonSeriesDataConstant(rootDir, npb2026Data) {
+  if (!npb2026Data) return;
+  const targetFile = path.join(rootDir, 'src', 'constants', 'postseasonSeriesData.js');
+  if (!fs.existsSync(targetFile)) return;
+
+  try {
+    let content = fs.readFileSync(targetFile, 'utf-8');
+    const npbRegex = /(const\s+NPB_POSTSEASON_DATA\s*=\s*{[\s\S]*?'2026':\s*){[\s\S]*?}(\s*,\s*['"]2025['"])/;
+    if (npbRegex.test(content)) {
+      const indentedJson = JSON.stringify(npb2026Data, null, 6)
+        .replace(/\n/g, '\n      ');
+      content = content.replace(npbRegex, `$1${indentedJson}$2`);
+      fs.writeFileSync(targetFile, content, 'utf-8');
+      console.log(`  🔄 [Updated] ${path.relative(rootDir, targetFile)} NPB_POSTSEASON_DATA['2026']`);
+    }
+  } catch (err) {
+    console.warn('  ⚠️ Could not update postseasonSeriesData.js for NPB:', err.message);
+  }
+}
+
+/**
  * Scrapes and compiles full NPB season into static JSON datasets
  */
 export async function scrapeNpbSeason(season = '2026', options = {}) {
@@ -353,6 +730,7 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
   // Months active in NPB regular season (04 = Mar/Apr, 05 = May, 06 = Jun, 07 = Jul, 08 = Aug, 09 = Sep, 10 = Oct, 11 = Nov for Olympic-delayed seasons)
   const months = ['04', '05', '06', '07', '08', '09', '10', '11'];
   const allGames = [];
+  const allPostseasonGames = [];
 
   for (const month of months) {
     try {
@@ -360,9 +738,22 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
       if (!html) {
         continue;
       }
-      const monthGames = parseNpbCalendarHtml(html, season, month);
-      console.log(`  Month ${month}: parsed ${monthGames.length} games`);
+      const monthGames = parseNpbCalendarHtml(html, season, month, { includePostseason: false });
+      console.log(`  Month ${month}: parsed ${monthGames.length} regular season games`);
       allGames.push(...monthGames);
+
+      // Parse and collect postseason games in October and November
+      if (month === '10' || month === '11') {
+        const monthAllGames = parseNpbCalendarHtml(html, season, month, { includePostseason: true });
+        const psOnly = monthAllGames.filter(g => g.stage && (
+          g.stage.toLowerCase().includes('cs') ||
+          g.stage.toLowerCase().includes('stage') ||
+          g.stage.toLowerCase().includes('climax') ||
+          g.stage.toLowerCase().includes('japan') ||
+          g.stage.toLowerCase().includes('nippon')
+        ));
+        allPostseasonGames.push(...psOnly);
+      }
     } catch (err) {
       console.error(`  ❌ Error processing month ${month}:`, err.message);
     }
@@ -382,6 +773,12 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
     return String(a.gamePk).localeCompare(String(b.gamePk));
   });
 
+  const uniquePsMap = new Map();
+  allPostseasonGames.forEach(g => {
+    uniquePsMap.set(g.gamePk, g);
+  });
+  const dedupedPsGames = Array.from(uniquePsMap.values());
+
   const finalGames = dedupedGames.filter(g => g.status?.detailedState === 'Final');
   const tieGames = finalGames.filter(g => g.isTie);
 
@@ -389,6 +786,7 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
   console.log(`   Total Games Recorded: ${dedupedGames.length}`);
   console.log(`   Final Games Completed: ${finalGames.length}`);
   console.log(`   Tie Games: ${tieGames.length}`);
+  console.log(`   Postseason Games Scraped: ${dedupedPsGames.length}`);
 
   // Summary per team by division
   const teamRecords = {};
@@ -498,6 +896,57 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
     }
   }
 
+  // Compile & Write Postseason Data
+  const sStr = String(season);
+  const postseasonData = parseNpbPostseason(dedupedPsGames, dedupedGames, sStr);
+  const serializedPostseason = JSON.stringify(postseasonData, null, 2);
+  const postseasonTargets = [];
+  if (fs.existsSync(path.join(rootDir, 'public'))) {
+    postseasonTargets.push(path.join(publicDir, 'postseason.json'));
+  }
+  if (fs.existsSync(path.join(rootDir, 'src'))) {
+    postseasonTargets.push(path.join(srcDataDir, 'postseason.json'));
+  }
+  if (postseasonTargets.length === 0 || fs.existsSync(standaloneDir)) {
+    postseasonTargets.push(path.join(standaloneDir, 'postseason.json'));
+  }
+
+  postseasonTargets.forEach(targetFile => {
+    const parent = path.dirname(targetFile);
+    if (!fs.existsSync(parent)) {
+      fs.mkdirSync(parent, { recursive: true });
+    }
+    fs.writeFileSync(targetFile, serializedPostseason, 'utf-8');
+    console.log(`  🏆 [Written] ${path.relative(rootDir, targetFile)} (${(serializedPostseason.length / 1024).toFixed(1)} KB)`);
+  });
+
+  // Write Postseason Embedded JS
+  if (fs.existsSync(srcDataDir)) {
+    const embeddedPostseasonJsTarget = path.join(srcDataDir, 'postseason.js');
+    const psJsContent = `/**
+ * Embedded NPB Postseason Series Dataset
+ * Enables zero-server local execution (file:/// protocol) without CORS restrictions.
+ */
+(function() {
+  const postseason = ${serializedPostseason};
+  if (typeof window !== "undefined") {
+    window.NPB_POSTSEASON_STATIC = postseason;
+    if (window.postseasonSeriesData && window.postseasonSeriesData.POSTSEASON_SERIES_DATA) {
+      window.postseasonSeriesData.POSTSEASON_SERIES_DATA.npb = postseason;
+    }
+  }
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = postseason;
+  }
+})();
+`;
+    fs.writeFileSync(embeddedPostseasonJsTarget, psJsContent, 'utf-8');
+    console.log(`  🏆 [Written] ${path.relative(rootDir, embeddedPostseasonJsTarget)} (${(psJsContent.length / 1024).toFixed(1)} KB)`);
+  }
+
+  // Update src/constants/postseasonSeriesData.js with synced postseason results if file exists
+  updateNpbPostseasonSeriesDataConstant(rootDir, postseasonData[sStr] || postseasonData['2026']);
+
   // Save scrape metadata with timestamp
   saveScrapeMetadata(rootDir, 'npb', season, dedupedGames);
 
@@ -519,7 +968,7 @@ function saveScrapeMetadata(rootDir, league, season, games) {
     const parts = formatter.formatToParts(now);
     const getP = t => parts.find(p => p.type === t)?.value || '';
     ptString = `${getP('year')}-${getP('month')}-${getP('day')} ${getP('hour')}:${getP('minute')} PT`;
-  } catch (e) {
+  } catch (_e) {
     ptString = now.toISOString();
   }
 
@@ -562,7 +1011,7 @@ function saveScrapeMetadata(rootDir, league, season, games) {
         content = content.replace(isoRegex, `$1${now.toISOString()}$3`);
       }
       fs.writeFileSync(scrapeMetaFile, content, 'utf-8');
-    } catch (e) {}
+    } catch (_e) {}
   }
 }
 

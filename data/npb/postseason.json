@@ -69,11 +69,13 @@
       "finalStage": {
         "name": "Central League Final Stage",
         "format": "Best of 6 (+1 Adv)",
+        "winsNeeded": 4,
         "team1": {
           "id": 3002,
           "name": "Hanshin Tigers",
           "shortName": "Tigers",
           "wins": 1,
+          "advantageWins": 1,
           "isWinner": false,
           "isEliminated": false,
           "hasAdvantage": true
@@ -207,12 +209,14 @@
       },
       "finalStage": {
         "name": "Pacific League Final Stage",
-        "format": "Best of 6 (+1 Adv)",
+        "format": "Best of 7 (+2 Adv)",
+        "winsNeeded": 5,
         "team1": {
           "id": 3007,
           "name": "Fukuoka SoftBank Hawks",
           "shortName": "Hawks",
-          "wins": 1,
+          "wins": 2,
+          "advantageWins": 2,
           "isWinner": false,
           "isEliminated": false,
           "hasAdvantage": true
@@ -263,6 +267,13 @@
           {
             "game": 6,
             "date": "2026-10-19",
+            "away": "Hokkaido Nippon-Ham Fighters",
+            "home": "Fukuoka SoftBank Hawks",
+            "ifNeeded": true
+          },
+          {
+            "game": 7,
+            "date": "2026-10-20",
             "away": "Hokkaido Nippon-Ham Fighters",
             "home": "Fukuoka SoftBank Hawks",
             "ifNeeded": true

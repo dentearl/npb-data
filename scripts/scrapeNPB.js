@@ -350,6 +350,83 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
 export const parseNpbCalendarHTML = parseNpbCalendarHtml;
 
 /**
+ * Calculates NPB Climax Series Final Stage advantage wins (1 or 2).
+ * 
+ * Rules:
+ * Prior to 2026: Flat +1 advantage for the league champion (Best of 6, 4 wins needed).
+ * Starting in 2026:
+ * The league champion (seed 1) receives a +2 advantage (Best of 7, 5 wins needed) IF:
+ *   1. The games back (GB) between seed 1 and the First Stage winner is >= 10.0 games, OR
+ *   2. The First Stage winner had a regular season winning percentage < .500.
+ * Otherwise, the standard +1 advantage applies (Best of 6, 4 wins needed).
+ */
+export function calculateNpbFinalStageAdvantage(seed1Record, firstStageWinnerRecord, season = 2026) {
+  const sNum = parseInt(season, 10);
+  if (sNum < 2026) {
+    return { advantageWins: 1, winsNeeded: 4, format: 'Best of 6 (+1 Adv)' };
+  }
+
+  if (!seed1Record || !firstStageWinnerRecord) {
+    return { advantageWins: 1, winsNeeded: 4, format: 'Best of 6 (+1 Adv)' };
+  }
+
+  const w1 = seed1Record.w ?? seed1Record.wins ?? 0;
+  const l1 = seed1Record.l ?? seed1Record.losses ?? 0;
+  const w2 = firstStageWinnerRecord.w ?? firstStageWinnerRecord.wins ?? 0;
+  const l2 = firstStageWinnerRecord.l ?? firstStageWinnerRecord.losses ?? 0;
+
+  // Games Back: ((w1 - w2) + (l2 - l1)) / 2
+  const gb = ((w1 - w2) + (l2 - l1)) / 2;
+
+  // Win percentage excluding ties (official NPB rule: wins / (wins + losses))
+  const totalDecisions = w2 + l2;
+  const winPct = totalDecisions > 0 ? (w2 / totalDecisions) : 0.500;
+
+  if (gb >= 10.0 || winPct < 0.500) {
+    return { advantageWins: 2, winsNeeded: 5, format: 'Best of 7 (+2 Adv)', gb, winPct };
+  }
+
+  return { advantageWins: 1, winsNeeded: 4, format: 'Best of 6 (+1 Adv)', gb, winPct };
+}
+
+/**
+ * Calculates regular season records (wins, losses, ties) from completed regular season games
+ */
+export function calculateStandingsFromGames(games = []) {
+  const records = {};
+  if (!Array.isArray(games)) return records;
+  games.forEach(g => {
+    const isFinal = Boolean(
+      g.isFinal ||
+      (g.status && (g.status.detailedState === 'Final' || g.status.abstractGameState === 'F'))
+    );
+    if (!isFinal) return;
+
+    const awayTeam = resolveNpbTeam(g.teams?.away?.team?.name || g.away);
+    const homeTeam = resolveNpbTeam(g.teams?.home?.team?.name || g.home);
+    const awayScore = typeof g.teams?.away?.score === 'number' ? g.teams.away.score : (typeof g.awayScore === 'number' ? g.awayScore : null);
+    const homeScore = typeof g.teams?.home?.score === 'number' ? g.teams.home.score : (typeof g.homeScore === 'number' ? g.homeScore : null);
+
+    if (!awayTeam || !homeTeam || awayScore === null || homeScore === null) return;
+
+    if (!records[awayTeam.id]) records[awayTeam.id] = { id: awayTeam.id, name: awayTeam.name, wins: 0, losses: 0, ties: 0 };
+    if (!records[homeTeam.id]) records[homeTeam.id] = { id: homeTeam.id, name: homeTeam.name, wins: 0, losses: 0, ties: 0 };
+
+    if (awayScore > homeScore) {
+      records[awayTeam.id].wins++;
+      records[homeTeam.id].losses++;
+    } else if (homeScore > awayScore) {
+      records[homeTeam.id].wins++;
+      records[awayTeam.id].losses++;
+    } else {
+      records[awayTeam.id].ties++;
+      records[homeTeam.id].ties++;
+    }
+  });
+  return records;
+}
+
+/**
  * Default fallback 2026 NPB postseason data for offline execution.
  */
 export function getDefault2026NpbPostseasonData() {
@@ -380,7 +457,8 @@ export function getDefault2026NpbPostseasonData() {
         finalStage: {
           name: 'Central League Final Stage',
           format: 'Best of 6 (+1 Adv)',
-          team1: { id: 3002, name: 'Hanshin Tigers', shortName: 'Tigers', wins: 1, isWinner: false, isEliminated: false, hasAdvantage: true },
+          winsNeeded: 4,
+          team1: { id: 3002, name: 'Hanshin Tigers', shortName: 'Tigers', wins: 1, advantageWins: 1, isWinner: false, isEliminated: false, hasAdvantage: true },
           adv: { name: 'First Stage Winner', shortName: 'First Winner', wins: 0, isWinner: false, isEliminated: false },
           isStarted: false,
           isComplete: false,
@@ -416,8 +494,9 @@ export function getDefault2026NpbPostseasonData() {
         },
         finalStage: {
           name: 'Pacific League Final Stage',
-          format: 'Best of 6 (+1 Adv)',
-          team1: { id: 3007, name: 'Fukuoka SoftBank Hawks', shortName: 'Hawks', wins: 1, isWinner: false, isEliminated: false, hasAdvantage: true },
+          format: 'Best of 7 (+2 Adv)',
+          winsNeeded: 5,
+          team1: { id: 3007, name: 'Fukuoka SoftBank Hawks', shortName: 'Hawks', wins: 2, advantageWins: 2, isWinner: false, isEliminated: false, hasAdvantage: true },
           adv: { name: 'First Stage Winner', shortName: 'First Winner', wins: 0, isWinner: false, isEliminated: false },
           isStarted: false,
           isComplete: false,
@@ -427,7 +506,8 @@ export function getDefault2026NpbPostseasonData() {
             { game: 3, date: '2026-10-16', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks' },
             { game: 4, date: '2026-10-17', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
             { game: 5, date: '2026-10-18', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
-            { game: 6, date: '2026-10-19', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true }
+            { game: 6, date: '2026-10-19', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
+            { game: 7, date: '2026-10-20', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true }
           ]
         },
         pennantWinner: null
@@ -456,10 +536,11 @@ export function getDefault2026NpbPostseasonData() {
 /**
  * Builds structured NPB postseason series from playoff events.
  */
-export function parseNpbPostseason(postseasonGames = [], _regularSeasonGames = [], season = '2026') {
+export function parseNpbPostseason(postseasonGames = [], regularSeasonGames = [], season = '2026') {
   const sStr = String(season);
   const baseData = getDefault2026NpbPostseasonData();
   const seasonPostseason = baseData[sStr] || baseData['2026'];
+  const standings = calculateStandingsFromGames(regularSeasonGames);
 
   if (!Array.isArray(postseasonGames) || postseasonGames.length === 0) {
     return baseData;
@@ -497,8 +578,18 @@ export function parseNpbPostseason(postseasonGames = [], _regularSeasonGames = [
     }
   });
 
-  function processSeries(seriesObj, gamesList, winsNeeded, hasAdvantage = false) {
-    if (!seriesObj || !Array.isArray(gamesList) || gamesList.length === 0) return;
+  function processSeries(seriesObj, gamesList, winsNeeded, advantageWins = 0) {
+    if (!seriesObj) return;
+    const initialAdv = typeof advantageWins === 'number' ? advantageWins : (advantageWins ? 1 : 0);
+
+    if (!Array.isArray(gamesList) || gamesList.length === 0) {
+      if (initialAdv > 0 && seriesObj.team1) {
+        seriesObj.team1.wins = initialAdv;
+        seriesObj.team1.advantageWins = initialAdv;
+        seriesObj.team1.hasAdvantage = true;
+      }
+      return;
+    }
 
     // Check if any games in this series have actually started or completed
     const hasStarted = gamesList.some(g =>
@@ -511,12 +602,17 @@ export function parseNpbPostseason(postseasonGames = [], _regularSeasonGames = [
     );
     if (!hasStarted) {
       seriesObj.isStarted = false;
+      if (initialAdv > 0 && seriesObj.team1) {
+        seriesObj.team1.wins = initialAdv;
+        seriesObj.team1.advantageWins = initialAdv;
+        seriesObj.team1.hasAdvantage = true;
+      }
       return;
     }
 
     seriesObj.isStarted = true;
     const parsedGames = [];
-    let winsTop = hasAdvantage ? 1 : 0;
+    let winsTop = initialAdv;
     let winsBot = 0;
 
     gamesList.forEach((g, idx) => {
@@ -562,7 +658,13 @@ export function parseNpbPostseason(postseasonGames = [], _regularSeasonGames = [
     });
 
     seriesObj.games = parsedGames;
-    if (seriesObj.team1) seriesObj.team1.wins = winsTop;
+    if (seriesObj.team1) {
+      seriesObj.team1.wins = winsTop;
+      if (initialAdv > 0) {
+        seriesObj.team1.advantageWins = initialAdv;
+        seriesObj.team1.hasAdvantage = true;
+      }
+    }
     if (seriesObj.team2) seriesObj.team2.wins = winsTop;
     if (seriesObj.clTeam) seriesObj.clTeam.wins = winsTop;
 
@@ -641,8 +743,53 @@ export function parseNpbPostseason(postseasonGames = [], _regularSeasonGames = [
     }
   }
 
-  processSeries(seasonPostseason.CL.finalStage, clFinalGames, 4, true);
-  processSeries(seasonPostseason.PL.finalStage, plFinalGames, 4, true);
+  // Calculate dynamic Final Stage advantage rules (2026+ revision)
+  const clSeed1Record = standings[seasonPostseason.CL?.seeds?.['1']?.id] || { wins: 79, losses: 62, ties: 2 };
+  const clAdvId = seasonPostseason.CL?.finalStage?.adv?.id || seasonPostseason.CL?.firstStage?.winnerId || seasonPostseason.CL?.seeds?.['3']?.id || seasonPostseason.CL?.seeds?.['2']?.id;
+  const clChallengerRecord = standings[clAdvId] || { wins: 71, losses: 69, ties: 3 };
+  const clAdvantage = calculateNpbFinalStageAdvantage(clSeed1Record, clChallengerRecord, season);
+
+  if (seasonPostseason.CL?.finalStage) {
+    seasonPostseason.CL.finalStage.format = clAdvantage.format;
+    seasonPostseason.CL.finalStage.winsNeeded = clAdvantage.winsNeeded;
+    if (seasonPostseason.CL.finalStage.team1) {
+      seasonPostseason.CL.finalStage.team1.advantageWins = clAdvantage.advantageWins;
+      seasonPostseason.CL.finalStage.team1.hasAdvantage = true;
+      if (!clFinalGames || clFinalGames.length === 0) {
+        seasonPostseason.CL.finalStage.team1.wins = clAdvantage.advantageWins;
+      }
+    }
+  }
+
+  const plSeed1Record = standings[seasonPostseason.PL?.seeds?.['1']?.id] || { wins: 91, losses: 49, ties: 3 };
+  const plAdvId = seasonPostseason.PL?.finalStage?.adv?.id || seasonPostseason.PL?.firstStage?.winnerId || seasonPostseason.PL?.seeds?.['3']?.id || seasonPostseason.PL?.seeds?.['2']?.id;
+  const plChallengerRecord = standings[plAdvId] || { wins: 78, losses: 62, ties: 3 };
+  const plAdvantage = calculateNpbFinalStageAdvantage(plSeed1Record, plChallengerRecord, season);
+
+  if (seasonPostseason.PL?.finalStage) {
+    seasonPostseason.PL.finalStage.format = plAdvantage.format;
+    seasonPostseason.PL.finalStage.winsNeeded = plAdvantage.winsNeeded;
+    if (seasonPostseason.PL.finalStage.team1) {
+      seasonPostseason.PL.finalStage.team1.advantageWins = plAdvantage.advantageWins;
+      seasonPostseason.PL.finalStage.team1.hasAdvantage = true;
+      if (!plFinalGames || plFinalGames.length === 0) {
+        seasonPostseason.PL.finalStage.team1.wins = plAdvantage.advantageWins;
+      }
+    }
+    if (plAdvantage.winsNeeded === 5 && Array.isArray(seasonPostseason.PL.finalStage.games) && seasonPostseason.PL.finalStage.games.length === 6) {
+      const g6 = seasonPostseason.PL.finalStage.games[5];
+      seasonPostseason.PL.finalStage.games.push({
+        game: 7,
+        date: '2026-10-20',
+        away: g6?.away || 'First Stage Winner',
+        home: g6?.home || 'Fukuoka SoftBank Hawks',
+        ifNeeded: true
+      });
+    }
+  }
+
+  processSeries(seasonPostseason.CL.finalStage, clFinalGames, clAdvantage.winsNeeded, clAdvantage.advantageWins);
+  processSeries(seasonPostseason.PL.finalStage, plFinalGames, plAdvantage.winsNeeded, plAdvantage.advantageWins);
 
   // If Final Stage completes, advance pennant winner / league champ into Japan Series
   if (seasonPostseason.CL?.finalStage?.isComplete && seasonPostseason.CL.finalStage.winnerId) {

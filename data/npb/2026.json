@@ -31504,5 +31504,75 @@
       }
     },
     "isTie": false
+  },
+  {
+    "gamePk": "20261015_HAN_DeNA",
+    "gameDate": "2026-10-15T18:00:00+09:00",
+    "officialDate": "2026-10-15",
+    "stage": null,
+    "status": {
+      "detailedState": "Scheduled",
+      "abstractGameState": "P"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": null,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": null,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "20261015_SBH_NHF",
+    "gameDate": "2026-10-15T18:00:00+09:00",
+    "officialDate": "2026-10-15",
+    "stage": null,
+    "status": {
+      "detailedState": "Scheduled",
+      "abstractGameState": "P"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3007,
+          "name": "Fukuoka SoftBank Hawks",
+          "abbrev": "SBH",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": null,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "abbrev": "NHF",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": null,
+        "isWinner": false
+      }
+    },
+    "isTie": false
   }
 ]

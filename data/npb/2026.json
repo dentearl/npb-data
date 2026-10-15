@@ -31506,9 +31506,9 @@
     "isTie": false
   },
   {
-    "gamePk": "20261015_HAN_DeNA",
-    "gameDate": "2026-10-15T18:00:00+09:00",
-    "officialDate": "2026-10-15",
+    "gamePk": "20261016_HAN_DeNA",
+    "gameDate": "2026-10-16T18:00:00+09:00",
+    "officialDate": "2026-10-16",
     "stage": null,
     "status": {
       "detailedState": "Scheduled",
@@ -31541,9 +31541,9 @@
     "isTie": false
   },
   {
-    "gamePk": "20261015_SBH_NHF",
-    "gameDate": "2026-10-15T18:00:00+09:00",
-    "officialDate": "2026-10-15",
+    "gamePk": "20261016_SBH_NHF",
+    "gameDate": "2026-10-16T18:00:00+09:00",
+    "officialDate": "2026-10-16",
     "stage": null,
     "status": {
       "detailedState": "Scheduled",

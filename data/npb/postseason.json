@@ -84,7 +84,7 @@
           "id": 3003,
           "name": "Yokohama DeNA BayStars",
           "shortName": "BayStars",
-          "wins": 2,
+          "wins": 3,
           "isWinner": false,
           "isEliminated": false
         },
@@ -113,13 +113,13 @@
           },
           {
             "game": 3,
-            "date": "2026-10-17",
+            "date": "2026-10-16",
             "away": "Hanshin Tigers",
             "home": "Yokohama DeNA BayStars",
-            "awayScore": null,
-            "homeScore": null,
-            "winnerId": null,
-            "isFinal": false
+            "awayScore": 0,
+            "homeScore": 4,
+            "winnerId": 3003,
+            "isFinal": true
           },
           {
             "game": 4,
@@ -226,9 +226,9 @@
           "id": 3007,
           "name": "Fukuoka SoftBank Hawks",
           "shortName": "Hawks",
-          "wins": 4,
+          "wins": 5,
           "advantageWins": 2,
-          "isWinner": false,
+          "isWinner": true,
           "isEliminated": false,
           "hasAdvantage": true
         },
@@ -238,10 +238,10 @@
           "shortName": "Fighters",
           "wins": 0,
           "isWinner": false,
-          "isEliminated": false
+          "isEliminated": true
         },
         "isStarted": true,
-        "isComplete": false,
+        "isComplete": true,
         "games": [
           {
             "game": 1,
@@ -265,47 +265,27 @@
           },
           {
             "game": 3,
-            "date": "2026-10-17",
+            "date": "2026-10-16",
             "away": "Fukuoka SoftBank Hawks",
             "home": "Hokkaido Nippon-Ham Fighters",
-            "awayScore": null,
-            "homeScore": null,
-            "winnerId": null,
-            "isFinal": false
-          },
-          {
-            "game": 4,
-            "date": "2026-10-18",
-            "away": "Fukuoka SoftBank Hawks",
-            "home": "Hokkaido Nippon-Ham Fighters",
-            "awayScore": null,
-            "homeScore": null,
-            "winnerId": null,
-            "isFinal": false
-          },
-          {
-            "game": 5,
-            "date": "2026-10-19",
-            "away": "Fukuoka SoftBank Hawks",
-            "home": "Hokkaido Nippon-Ham Fighters",
-            "awayScore": null,
-            "homeScore": null,
-            "winnerId": null,
-            "isFinal": false
-          },
-          {
-            "game": 6,
-            "date": "2026-10-20",
-            "away": "Fukuoka SoftBank Hawks",
-            "home": "Hokkaido Nippon-Ham Fighters",
-            "awayScore": null,
-            "homeScore": null,
-            "winnerId": null,
-            "isFinal": false
+            "awayScore": 6,
+            "homeScore": 2,
+            "winnerId": 3007,
+            "isFinal": true
           }
-        ]
+        ],
+        "winnerId": 3007
       },
-      "pennantWinner": null
+      "pennantWinner": {
+        "id": 3007,
+        "name": "Fukuoka SoftBank Hawks",
+        "shortName": "Hawks",
+        "wins": 5,
+        "advantageWins": 2,
+        "isWinner": true,
+        "isEliminated": false,
+        "hasAdvantage": true
+      }
     },
     "japanSeries": {
       "name": "Japan Series",
@@ -317,8 +297,9 @@
         "isWinner": false
       },
       "plTeam": {
-        "name": "Pacific League Champion",
-        "shortName": "PL Champ",
+        "id": 3007,
+        "name": "Fukuoka SoftBank Hawks",
+        "shortName": "Hawks",
         "wins": 0,
         "isWinner": false
       },

@@ -77,19 +77,19 @@
           "wins": 1,
           "advantageWins": 1,
           "isWinner": false,
-          "isEliminated": false,
+          "isEliminated": true,
           "hasAdvantage": true
         },
         "adv": {
           "id": 3003,
           "name": "Yokohama DeNA BayStars",
           "shortName": "BayStars",
-          "wins": 3,
-          "isWinner": false,
+          "wins": 4,
+          "isWinner": true,
           "isEliminated": false
         },
         "isStarted": true,
-        "isComplete": false,
+        "isComplete": true,
         "games": [
           {
             "game": 1,
@@ -123,27 +123,25 @@
           },
           {
             "game": 4,
-            "date": "2026-10-18",
+            "date": "2026-10-17",
             "away": "Hanshin Tigers",
             "home": "Yokohama DeNA BayStars",
-            "awayScore": null,
-            "homeScore": null,
-            "winnerId": null,
-            "isFinal": false
-          },
-          {
-            "game": 5,
-            "date": "2026-10-19",
-            "away": "Hanshin Tigers",
-            "home": "Yokohama DeNA BayStars",
-            "awayScore": null,
-            "homeScore": null,
-            "winnerId": null,
-            "isFinal": false
+            "awayScore": 5,
+            "homeScore": 8,
+            "winnerId": 3003,
+            "isFinal": true
           }
-        ]
+        ],
+        "winnerId": 3003
       },
-      "pennantWinner": null
+      "pennantWinner": {
+        "id": 3003,
+        "name": "Yokohama DeNA BayStars",
+        "shortName": "BayStars",
+        "wins": 4,
+        "isWinner": true,
+        "isEliminated": false
+      }
     },
     "PL": {
       "seeds": {
@@ -291,8 +289,9 @@
       "name": "Japan Series",
       "format": "Best of 7",
       "clTeam": {
-        "name": "Central League Champion",
-        "shortName": "CL Champ",
+        "id": 3003,
+        "name": "Yokohama DeNA BayStars",
+        "shortName": "BayStars",
         "wins": 0,
         "isWinner": false
       },

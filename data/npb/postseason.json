@@ -1,7 +1,7 @@
 {
   "2026": {
     "era": "climax_series",
-    "isStarted": false,
+    "isStarted": true,
     "isComplete": false,
     "CL": {
       "seeds": {
@@ -30,39 +30,41 @@
           "shortName": "Giants",
           "wins": 0,
           "isWinner": false,
-          "isEliminated": false
+          "isEliminated": true
         },
         "team3": {
           "id": 3003,
           "name": "Yokohama DeNA BayStars",
           "shortName": "BayStars",
-          "wins": 0,
-          "isWinner": false,
+          "wins": 2,
+          "isWinner": true,
           "isEliminated": false
         },
-        "isStarted": false,
-        "isComplete": false,
+        "isStarted": true,
+        "isComplete": true,
         "games": [
           {
             "game": 1,
             "date": "2026-10-10",
-            "away": "Yokohama DeNA BayStars",
-            "home": "Yomiuri Giants"
+            "away": "Yomiuri Giants",
+            "home": "Yokohama DeNA BayStars",
+            "awayScore": 1,
+            "homeScore": 2,
+            "winnerId": 3003,
+            "isFinal": true
           },
           {
             "game": 2,
             "date": "2026-10-11",
-            "away": "Yokohama DeNA BayStars",
-            "home": "Yomiuri Giants"
-          },
-          {
-            "game": 3,
-            "date": "2026-10-12",
-            "away": "Yokohama DeNA BayStars",
-            "home": "Yomiuri Giants",
-            "ifNeeded": true
+            "away": "Yomiuri Giants",
+            "home": "Yokohama DeNA BayStars",
+            "awayScore": 1,
+            "homeScore": 4,
+            "winnerId": 3003,
+            "isFinal": true
           }
-        ]
+        ],
+        "winnerId": 3003
       },
       "finalStage": {
         "name": "Central League Final Stage",
@@ -79,8 +81,9 @@
           "hasAdvantage": true
         },
         "adv": {
-          "name": "First Stage Winner",
-          "shortName": "First Winner",
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "shortName": "BayStars",
           "wins": 0,
           "isWinner": false,
           "isEliminated": false
@@ -91,39 +94,39 @@
           {
             "game": 1,
             "date": "2026-10-14",
-            "away": "First Stage Winner",
+            "away": "Yokohama DeNA BayStars",
             "home": "Hanshin Tigers"
           },
           {
             "game": 2,
             "date": "2026-10-15",
-            "away": "First Stage Winner",
+            "away": "Yokohama DeNA BayStars",
             "home": "Hanshin Tigers"
           },
           {
             "game": 3,
             "date": "2026-10-16",
-            "away": "First Stage Winner",
+            "away": "Yokohama DeNA BayStars",
             "home": "Hanshin Tigers"
           },
           {
             "game": 4,
             "date": "2026-10-17",
-            "away": "First Stage Winner",
+            "away": "Yokohama DeNA BayStars",
             "home": "Hanshin Tigers",
             "ifNeeded": true
           },
           {
             "game": 5,
             "date": "2026-10-18",
-            "away": "First Stage Winner",
+            "away": "Yokohama DeNA BayStars",
             "home": "Hanshin Tigers",
             "ifNeeded": true
           },
           {
             "game": 6,
             "date": "2026-10-19",
-            "away": "First Stage Winner",
+            "away": "Yokohama DeNA BayStars",
             "home": "Hanshin Tigers",
             "ifNeeded": true
           }
@@ -156,41 +159,53 @@
           "id": 3012,
           "name": "Saitama Seibu Lions",
           "shortName": "Lions",
-          "wins": 0,
+          "wins": 1,
           "isWinner": false,
-          "isEliminated": false
+          "isEliminated": true
         },
         "team3": {
           "id": 3008,
           "name": "Hokkaido Nippon-Ham Fighters",
           "shortName": "Fighters",
-          "wins": 0,
-          "isWinner": false,
+          "wins": 2,
+          "isWinner": true,
           "isEliminated": false
         },
-        "isStarted": false,
-        "isComplete": false,
+        "isStarted": true,
+        "isComplete": true,
         "games": [
           {
             "game": 1,
             "date": "2026-10-10",
-            "away": "Hokkaido Nippon-Ham Fighters",
-            "home": "Saitama Seibu Lions"
+            "away": "Saitama Seibu Lions",
+            "home": "Hokkaido Nippon-Ham Fighters",
+            "awayScore": 3,
+            "homeScore": 2,
+            "winnerId": 3012,
+            "isFinal": true
           },
           {
             "game": 2,
             "date": "2026-10-11",
-            "away": "Hokkaido Nippon-Ham Fighters",
-            "home": "Saitama Seibu Lions"
+            "away": "Saitama Seibu Lions",
+            "home": "Hokkaido Nippon-Ham Fighters",
+            "awayScore": 0,
+            "homeScore": 1,
+            "winnerId": 3008,
+            "isFinal": true
           },
           {
             "game": 3,
             "date": "2026-10-12",
-            "away": "Hokkaido Nippon-Ham Fighters",
-            "home": "Saitama Seibu Lions",
-            "ifNeeded": true
+            "away": "Saitama Seibu Lions",
+            "home": "Hokkaido Nippon-Ham Fighters",
+            "awayScore": 1,
+            "homeScore": 4,
+            "winnerId": 3008,
+            "isFinal": true
           }
-        ]
+        ],
+        "winnerId": 3008
       },
       "finalStage": {
         "name": "Pacific League Final Stage",
@@ -207,8 +222,9 @@
           "hasAdvantage": true
         },
         "adv": {
-          "name": "First Stage Winner",
-          "shortName": "First Winner",
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "shortName": "Fighters",
           "wins": 0,
           "isWinner": false,
           "isEliminated": false
@@ -219,46 +235,46 @@
           {
             "game": 1,
             "date": "2026-10-14",
-            "away": "First Stage Winner",
+            "away": "Hokkaido Nippon-Ham Fighters",
             "home": "Fukuoka SoftBank Hawks"
           },
           {
             "game": 2,
             "date": "2026-10-15",
-            "away": "First Stage Winner",
+            "away": "Hokkaido Nippon-Ham Fighters",
             "home": "Fukuoka SoftBank Hawks"
           },
           {
             "game": 3,
             "date": "2026-10-16",
-            "away": "First Stage Winner",
+            "away": "Hokkaido Nippon-Ham Fighters",
             "home": "Fukuoka SoftBank Hawks"
           },
           {
             "game": 4,
             "date": "2026-10-17",
-            "away": "First Stage Winner",
+            "away": "Hokkaido Nippon-Ham Fighters",
             "home": "Fukuoka SoftBank Hawks",
             "ifNeeded": true
           },
           {
             "game": 5,
             "date": "2026-10-18",
-            "away": "First Stage Winner",
+            "away": "Hokkaido Nippon-Ham Fighters",
             "home": "Fukuoka SoftBank Hawks",
             "ifNeeded": true
           },
           {
             "game": 6,
             "date": "2026-10-19",
-            "away": "First Stage Winner",
+            "away": "Hokkaido Nippon-Ham Fighters",
             "home": "Fukuoka SoftBank Hawks",
             "ifNeeded": true
           },
           {
             "game": 7,
             "date": "2026-10-20",
-            "away": "First Stage Winner",
+            "away": "Hokkaido Nippon-Ham Fighters",
             "home": "Fukuoka SoftBank Hawks",
             "ifNeeded": true
           }

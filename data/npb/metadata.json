@@ -1,10 +1,10 @@
 {
   "league": "npb",
   "season": "2026",
-  "lastUpdated": "2026-10-21T19:29:45.855Z",
-  "lastUpdatedPT": "2026-10-21 12:29 PT",
-  "lastScraped": "2026-10-21T19:29:45.855Z",
-  "lastScrapedPT": "2026-10-21 12:29 PT",
-  "totalGames": 0,
-  "completedGames": 0
+  "lastUpdated": "2026-10-13T04:42:56.839Z",
+  "lastUpdatedPT": "2026-10-12 21:42 PT",
+  "lastScraped": "2026-10-13T04:42:56.839Z",
+  "lastScrapedPT": "2026-10-12 21:42 PT",
+  "totalGames": 899,
+  "completedGames": 799
 }

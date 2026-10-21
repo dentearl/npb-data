@@ -913,119 +913,297 @@ export function updateNpbPostseasonSeriesDataConstant(rootDir, npb2026Data) {
 }
 
 /**
- * Scrapes and compiles full NPB season into static JSON datasets
+ * Ingests full season schedule & scores from BaseballFreak (baseball-freak.com/game/{YY}/)
+ * Covers seasons 2009 through 2025.
  */
-export async function scrapeNpbSeason(season = '2026', options = {}) {
-  const { forceRefresh = false } = options;
-  console.log(`🇯🇵 Compiling NPB ${season} Regular Season Data...`);
+export async function fetchBaseballFreakSeason(season) {
+  const yy = String(season).slice(2);
+  const url = `https://baseball-freak.com/game/${yy}/`;
+  console.log(`  🌐 [Freak] Fetching season ${season} archive from ${url}...`);
 
-  // Months active in NPB regular season (04 = Mar/Apr, 05 = May, 06 = Jun, 07 = Jul, 08 = Aug, 09 = Sep, 10 = Oct, 11 = Nov for Olympic-delayed seasons)
-  const months = ['04', '05', '06', '07', '08', '09', '10', '11'];
-  const allGames = [];
-  const allPostseasonGames = [];
+  const response = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8'
+    }
+  });
 
-  for (const month of months) {
-    try {
-      const html = await fetchMonthHtml(season, month, { forceRefresh });
-      if (!html) {
-        continue;
+  if (!response.ok) {
+    throw new Error(`BaseballFreak HTTP ${response.status} ${response.statusText} for ${url}`);
+  }
+
+  const html = await response.text();
+  const tableStart = html.indexOf('<table class="schedule">');
+  if (tableStart === -1) {
+    throw new Error(`Could not find schedule table in BaseballFreak ${season}`);
+  }
+  const tableEnd = html.indexOf('</table>', tableStart);
+  const table = html.slice(tableStart, tableEnd);
+
+  const teamCodeMap = {
+    g: 3001, t: 3002, yb: 3003, c: 3004, d: 3005, s: 3006,
+    h: 3007, f: 3008, m: 3009, e: 3010, bs: 3011, l: 3012
+  };
+
+  const games = [];
+  const rowRegex = /<tr>([\s\S]*?)<\/tr>/g;
+  let match;
+
+  while ((match = rowRegex.exec(table)) !== null) {
+    const row = match[1];
+    const dateMatch = row.match(/<td>(?:<span[^>]*>)?(\d+)月(\d+)日/);
+    if (!dateMatch) continue;
+    const month = dateMatch[1].padStart(2, '0');
+    const day = dateMatch[2].padStart(2, '0');
+    const officialDate = `${season}-${month}-${day}`;
+
+    const cellRegex = /<td class="[cpi]d">([\s\S]*?)<\/td>/g;
+    let cellMatch;
+    while ((cellMatch = cellRegex.exec(row)) !== null) {
+      const cell = cellMatch[1];
+      const gameLinkMatch = cell.match(/href="game\/\d{6}([a-z]+)-([a-z]+)\.html">([\s\S]*?)<\/a>/);
+      const timeMatch = cell.match(/(\d{1,2}:\d{2})/);
+      const startTime = timeMatch ? timeMatch[1] : '18:00';
+      const timePadded = startTime.length === 4 ? `0${startTime}:00` : `${startTime}:00`;
+      const gameDate = `${officialDate}T${timePadded}+09:00`;
+
+      if (gameLinkMatch) {
+        const homeCode = gameLinkMatch[1];
+        const awayCode = gameLinkMatch[2];
+        const homeId = teamCodeMap[homeCode];
+        const awayId = teamCodeMap[awayCode];
+        const homeTeam = Object.values(NPB_TEAM_MAPPING).find(t => t.id === homeId);
+        const awayTeam = Object.values(NPB_TEAM_MAPPING).find(t => t.id === awayId);
+
+        if (!homeTeam || !awayTeam) continue;
+
+        const scoreSnippet = gameLinkMatch[3].replace(/<[^>]+>/g, '').trim();
+        const [homeScoreStr, awayScoreStr] = scoreSnippet.split(/\s*-\s*/);
+        const homeScore = parseInt(homeScoreStr, 10);
+        const awayScore = parseInt(awayScoreStr, 10);
+
+        if (isNaN(homeScore) || isNaN(awayScore)) continue;
+
+        const isTie = homeScore === awayScore;
+        const homeWin = !isTie && homeScore > awayScore;
+        const awayWin = !isTie && awayScore > homeScore;
+        const gamePk = `${officialDate.replace(/-/g, '')}${homeTeam.id}${awayTeam.id}`;
+
+        games.push({
+          gamePk,
+          gameDate,
+          officialDate,
+          status: { detailedState: 'Final', abstractGameState: 'F' },
+          teams: {
+            away: {
+              team: { id: awayTeam.id, name: awayTeam.name, abbrev: awayTeam.abbrev, league: awayTeam.league, division: awayTeam.division },
+              score: awayScore,
+              isWinner: awayWin
+            },
+            home: {
+              team: { id: homeTeam.id, name: homeTeam.name, abbrev: homeTeam.abbrev, league: homeTeam.league, division: homeTeam.division },
+              score: homeScore,
+              isWinner: homeWin
+            }
+          },
+          isTie
+        });
       }
-      const monthGames = parseNpbCalendarHtml(html, season, month, { includePostseason: false });
-      console.log(`  Month ${month}: parsed ${monthGames.length} regular season games`);
-      allGames.push(...monthGames);
-
-      // Parse and collect postseason games in October and November
-      if (month === '10' || month === '11') {
-        const monthAllGames = parseNpbCalendarHtml(html, season, month, { includePostseason: true });
-        const psOnly = monthAllGames.filter(g => g.stage && (
-          g.stage.toLowerCase().includes('cs') ||
-          g.stage.toLowerCase().includes('stage') ||
-          g.stage.toLowerCase().includes('climax') ||
-          g.stage.toLowerCase().includes('japan') ||
-          g.stage.toLowerCase().includes('nippon')
-        ));
-        allPostseasonGames.push(...psOnly);
-      }
-    } catch (err) {
-      console.error(`  ❌ Error processing month ${month}:`, err.message);
     }
   }
 
-  // Deduplicate and sort chronologically by officialDate and gamePk
-  const uniqueMap = new Map();
-  allGames.forEach(g => {
-    uniqueMap.set(g.gamePk, g);
-  });
-  const dedupedGames = Array.from(uniqueMap.values());
+  return games;
+}
 
-  dedupedGames.sort((a, b) => {
-    if (a.officialDate !== b.officialDate) {
-      return a.officialDate.localeCompare(b.officialDate);
-    }
-    return String(a.gamePk).localeCompare(String(b.gamePk));
-  });
-
-  const uniquePsMap = new Map();
-  allPostseasonGames.forEach(g => {
-    uniquePsMap.set(g.gamePk, g);
-  });
-  const dedupedPsGames = Array.from(uniquePsMap.values());
-
-  const finalGames = dedupedGames.filter(g => g.status?.detailedState === 'Final');
-  const tieGames = finalGames.filter(g => g.isTie);
-
-  console.log(`\n📊 Season Summary (${season}):`);
-  console.log(`   Total Games Recorded: ${dedupedGames.length}`);
-  console.log(`   Final Games Completed: ${finalGames.length}`);
-  console.log(`   Tie Games: ${tieGames.length}`);
-  console.log(`   Postseason Games Scraped: ${dedupedPsGames.length}`);
-
-  // Summary per team by division
-  const teamRecords = {};
-  finalGames.forEach(g => {
-    const home = g.teams.home;
-    const away = g.teams.away;
-
-    if (!teamRecords[home.team.id]) {
-      teamRecords[home.team.id] = { name: home.team.name, division: home.team.division, w: 0, l: 0, t: 0 };
-    }
-    if (!teamRecords[away.team.id]) {
-      teamRecords[away.team.id] = { name: away.team.name, division: away.team.division, w: 0, l: 0, t: 0 };
-    }
-
-    if (g.isTie) {
-      teamRecords[home.team.id].t += 1;
-      teamRecords[away.team.id].t += 1;
-    } else if (home.isWinner) {
-      teamRecords[home.team.id].w += 1;
-      teamRecords[away.team.id].l += 1;
-    } else if (away.isWinner) {
-      teamRecords[away.team.id].w += 1;
-      teamRecords[home.team.id].l += 1;
-    }
-  });
-
-  const centralTeams = Object.values(teamRecords).filter(t => t.division === 'Central League');
-  const pacificTeams = Object.values(teamRecords).filter(t => t.division === 'Pacific League');
-
-  const printDivision = (title, teams) => {
-    console.log(`\n🏆 ${title} Standings (W-L-T):`);
-    teams
-      .sort((a, b) => {
-        const pctA = (a.w + a.l) > 0 ? a.w / (a.w + a.l) : 0;
-        const pctB = (b.w + b.l) > 0 ? b.w / (b.w + b.l) : 0;
-        return pctB - pctA;
-      })
-      .forEach((t, idx) => {
-        const pct = (t.w + t.l) > 0 ? (t.w / (t.w + t.l)).toFixed(3) : '.000';
-        console.log(`   ${String(idx + 1).padStart(2, ' ')}. ${t.name.padEnd(28, ' ')} ${t.w}-${t.l}-${t.t}  (${pct})`);
-      });
+/**
+ * Ingests full season schedule & scores from NF3 (nf3.sakura.ne.jp)
+ * Covers seasons 2005 through 2008.
+ */
+export async function fetchNf3Season(season) {
+  console.log(`  🌐 [NF3] Fetching season ${season} from nf3.sakura.ne.jp...`);
+  const teamMeta = {
+    D:  { id: 3005, leg: 0 },
+    S:  { id: 3006, leg: 0 },
+    G:  { id: 3001, leg: 0 },
+    T:  { id: 3002, leg: 0 },
+    C:  { id: 3004, leg: 0 },
+    YB: { id: 3003, leg: 0 },
+    L:  { id: 3012, leg: 1 },
+    H:  { id: 3007, leg: 1 },
+    F:  { id: 3008, leg: 1 },
+    M:  { id: 3009, leg: 1 },
+    Bs: { id: 3011, leg: 1 },
+    E:  { id: 3010, leg: 1 }
   };
 
-  printDivision('Central League', centralTeams);
-  printDivision('Pacific League', pacificTeams);
+  const nameToId = {
+    '中日': 3005, 'ヤクルト': 3006, '巨人': 3001, '阪神': 3002, '広島': 3004, '横浜': 3003,
+    '西武': 3012, 'ソフトバンク': 3007, '日本ハム': 3008, 'ロッテ': 3009, 'オリックス': 3011, '楽天': 3010
+  };
 
-  // Target paths (supports both standalone scraper repo and full web app repo)
+  const gamesMap = new Map();
+
+  for (const [code, meta] of Object.entries(teamMeta)) {
+    const url = `https://nf3.sakura.ne.jp/php/stat_disp/stat_disp.php?y=${season}&leg=${meta.leg}&mon=0&tm=${code}&vst=all`;
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+      }
+    });
+
+    if (!response.ok) {
+      console.warn(`    ⚠️ NF3 failed for team ${code}: HTTP ${response.status}`);
+      continue;
+    }
+
+    const html = await response.text();
+    const tableStart = html.indexOf('<table class="Base"');
+    if (tableStart === -1) continue;
+    const tableEnd = html.indexOf('</table>', tableStart);
+    const table = html.slice(tableStart, tableEnd);
+
+    const rowRegex = /<tr[^>]*>([\s\S]*?)<\/tr>/g;
+    let match;
+
+    while ((match = rowRegex.exec(table)) !== null) {
+      const row = match[1];
+      if (row.includes('<th') && (row.includes('日付') || row.includes('対戦T'))) continue;
+      const cells = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map(m => m[1].trim());
+      if (cells.length < 19) continue;
+
+      const dateStr = cells[0];
+      const oppName = cells[2].replace(/<[^>]+>/g, '').trim();
+      const oppId = nameToId[oppName];
+      if (!oppId) continue;
+
+      const isHome = cells[4].includes('Ｈ');
+      const homeId = isHome ? meta.id : oppId;
+      const awayId = isHome ? oppId : meta.id;
+
+      const homeTeam = Object.values(NPB_TEAM_MAPPING).find(t => t.id === homeId);
+      const awayTeam = Object.values(NPB_TEAM_MAPPING).find(t => t.id === awayId);
+      if (!homeTeam || !awayTeam) continue;
+
+      const [m, d] = dateStr.split('/');
+      const officialDate = `${season}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+      const key = `${officialDate}_${homeId}_${awayId}`;
+
+      const scoreCell = cells[18].replace(/<[^>]+>/g, '').trim();
+      const scoreMatch = scoreCell.match(/^(\d+)-(\d+)$/);
+      if (scoreMatch) {
+        const teamScore = parseInt(scoreMatch[1], 10);
+        const oppScore = parseInt(scoreMatch[2], 10);
+        const homeScore = isHome ? teamScore : oppScore;
+        const awayScore = isHome ? oppScore : teamScore;
+        const isTie = homeScore === awayScore;
+        const homeWin = !isTie && homeScore > awayScore;
+        const awayWin = !isTie && awayScore > homeScore;
+
+        const timeStr = cells[5] ? cells[5].trim() : '18:00';
+        const timePadded = timeStr.length === 4 ? `0${timeStr}:00` : (timeStr.includes(':') ? `${timeStr}:00` : '18:00:00');
+        const gameDate = `${officialDate}T${timePadded}+09:00`;
+        const gamePk = `${officialDate.replace(/-/g, '')}${homeTeam.id}${awayTeam.id}`;
+
+        if (!gamesMap.has(key)) {
+          gamesMap.set(key, {
+            gamePk,
+            gameDate,
+            officialDate,
+            status: { detailedState: 'Final', abstractGameState: 'F' },
+            teams: {
+              away: {
+                team: { id: awayTeam.id, name: awayTeam.name, abbrev: awayTeam.abbrev, league: awayTeam.league, division: awayTeam.division },
+                score: awayScore,
+                isWinner: awayWin
+              },
+              home: {
+                team: { id: homeTeam.id, name: homeTeam.name, abbrev: homeTeam.abbrev, league: homeTeam.league, division: homeTeam.division },
+                score: homeScore,
+                isWinner: homeWin
+              }
+            },
+            isTie
+          });
+        }
+      }
+    }
+    // Respectful delay between team requests
+    await new Promise(r => setTimeout(r, 150));
+  }
+
+  return Array.from(gamesMap.values());
+}
+
+/**
+ * Writes data/<league>/metadata.json and updates src/constants/scrapeMeta.js if present
+ */
+function saveScrapeMetadata(rootDir, league, season, games) {
+  if (String(season) !== '2026' && fs.existsSync(path.join(rootDir, 'data', league, 'metadata.json'))) {
+    return;
+  }
+  const now = new Date();
+  let ptString = '';
+  try {
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Los_Angeles',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    });
+    const parts = formatter.formatToParts(now);
+    const getP = t => parts.find(p => p.type === t)?.value || '';
+    ptString = `${getP('year')}-${getP('month')}-${getP('day')} ${getP('hour')}:${getP('minute')} PT`;
+  } catch (_e) {
+    ptString = now.toISOString();
+  }
+
+  const metaObj = {
+    league,
+    season: String(season),
+    lastUpdated: now.toISOString(),
+    lastUpdatedPT: ptString,
+    lastScraped: now.toISOString(),
+    lastScrapedPT: ptString,
+    totalGames: Array.isArray(games) ? games.length : 0,
+    completedGames: Array.isArray(games) ? games.filter(g => g.status?.detailedState === 'Final').length : 0
+  };
+
+  const serialized = JSON.stringify(metaObj, null, 2);
+  const candidateDirs = [
+    path.join(rootDir, 'public', 'data', league),
+    path.join(rootDir, 'src', 'data', league),
+    path.join(rootDir, 'data', league)
+  ];
+
+  candidateDirs.forEach(dir => {
+    if (fs.existsSync(dir)) {
+      const metaPath = path.join(dir, 'metadata.json');
+      fs.writeFileSync(metaPath, serialized, 'utf-8');
+      console.log(`  ⏱️ [Metadata] ${path.relative(rootDir, metaPath)} (${ptString})`);
+    }
+  });
+
+  const scrapeMetaFile = path.join(rootDir, 'src', 'constants', 'scrapeMeta.js');
+  if (fs.existsSync(scrapeMetaFile)) {
+    try {
+      let content = fs.readFileSync(scrapeMetaFile, 'utf-8');
+      const lgRegex = new RegExp(`(${league}\\s*:\\s*{[\\s\\S]*?lastScraped:\\s*['"])([^'"]+)(['"])`);
+      if (lgRegex.test(content)) {
+        content = content.replace(lgRegex, `$1${ptString}$3`);
+      }
+      const isoRegex = new RegExp(`(${league}\\s*:\\s*{[\\s\\S]*?iso:\\s*['"])([^'"]+)(['"])`);
+      if (isoRegex.test(content)) {
+        content = content.replace(isoRegex, `$1${now.toISOString()}$3`);
+      }
+      fs.writeFileSync(scrapeMetaFile, content, 'utf-8');
+    } catch (_e) {}
+  }
+}
+
+/**
+ * Persists compiled NPB games and postseason datasets to all appropriate directories
+ */
+export function saveDataset(season, dedupedGames, dedupedPsGames = []) {
   const targets = [];
   const publicDir = path.join(rootDir, 'public', 'data', 'npb');
   const srcDataDir = path.join(rootDir, 'src', 'data', 'npb');
@@ -1113,13 +1291,12 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
       console.log(`  🏆 [Written] ${path.relative(rootDir, targetFile)} (${(serializedPostseason.length / 1024).toFixed(1)} KB)`);
     });
 
-    // Write Postseason Embedded JS
     if (fs.existsSync(srcDataDir)) {
       const embeddedPostseasonJsTarget = path.join(srcDataDir, 'postseason.js');
       const psJsContent = `/**
-   * Embedded NPB Postseason Series Dataset
-   * Enables zero-server local execution (file:/// protocol) without CORS restrictions.
-   */
+ * Embedded NPB Postseason Series Dataset
+ * Enables zero-server local execution (file:/// protocol) without CORS restrictions.
+ */
 (function() {
   const postseason = ${serializedPostseason};
   if (typeof window !== "undefined") {
@@ -1137,76 +1314,214 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
       console.log(`  🏆 [Written] ${path.relative(rootDir, embeddedPostseasonJsTarget)} (${(psJsContent.length / 1024).toFixed(1)} KB)`);
     }
 
-    // Update src/constants/postseasonSeriesData.js with synced postseason results if file exists
     updateNpbPostseasonSeriesDataConstant(rootDir, postseasonData['2026']);
   }
 
-  // Save scrape metadata with timestamp
   saveScrapeMetadata(rootDir, 'npb', season, dedupedGames);
-
-  return dedupedGames;
 }
 
 /**
- * Writes data/<league>/metadata.json and updates src/constants/scrapeMeta.js if present
+ * Scrapes and compiles full NPB season into static JSON datasets
  */
-function saveScrapeMetadata(rootDir, league, season, games) {
-  const now = new Date();
-  let ptString = '';
-  try {
-    const formatter = new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/Los_Angeles',
-      year: 'numeric', month: '2-digit', day: '2-digit',
-      hour: '2-digit', minute: '2-digit', hour12: false
-    });
-    const parts = formatter.formatToParts(now);
-    const getP = t => parts.find(p => p.type === t)?.value || '';
-    ptString = `${getP('year')}-${getP('month')}-${getP('day')} ${getP('hour')}:${getP('minute')} PT`;
-  } catch (_e) {
-    ptString = now.toISOString();
+export async function scrapeNpbSeason(season = '2026', options = {}) {
+  const { forceRefresh = false } = options;
+  console.log(`🇯🇵 Compiling NPB ${season} Regular Season Data...`);
+
+  const sNum = parseInt(season, 10);
+  let dedupedGames = [];
+  let dedupedPsGames = [];
+
+  // For historical seasons (pre-2026), ingest from alternative archives
+  if (sNum < 2026) {
+    if (sNum >= 2009) {
+      try {
+        dedupedGames = await fetchBaseballFreakSeason(season);
+      } catch (err) {
+        console.warn(`  ⚠️ BaseballFreak failed for ${season}: ${err.message}`);
+      }
+    } else if (sNum >= 2005 && sNum <= 2008) {
+      try {
+        dedupedGames = await fetchNf3Season(season);
+      } catch (err) {
+        console.warn(`  ⚠️ NF3 failed for ${season}: ${err.message}`);
+      }
+    }
+
+    if (dedupedGames.length > 0) {
+      dedupedGames.sort((a, b) => {
+        if (a.officialDate !== b.officialDate) {
+          return a.officialDate.localeCompare(b.officialDate);
+        }
+        return String(a.gamePk).localeCompare(String(b.gamePk));
+      });
+
+      const finalGames = dedupedGames.filter(g => g.status?.detailedState === 'Final');
+      const tieGames = finalGames.filter(g => g.isTie);
+
+      console.log(`\n📊 Season Summary (${season}):`);
+      console.log(`   Total Games Recorded: ${dedupedGames.length}`);
+      console.log(`   Final Games Completed: ${finalGames.length}`);
+      console.log(`   Tie Games: ${tieGames.length}`);
+
+      // Summary per team by division
+      const teamRecords = {};
+      finalGames.forEach(g => {
+        const homeId = g.teams.home.team.id;
+        const awayId = g.teams.away.team.id;
+        if (!teamRecords[homeId]) teamRecords[homeId] = { w: 0, l: 0, t: 0 };
+        if (!teamRecords[awayId]) teamRecords[awayId] = { w: 0, l: 0, t: 0 };
+
+        if (g.isTie) {
+          teamRecords[homeId].t++;
+          teamRecords[awayId].t++;
+        } else if (g.teams.home.isWinner) {
+          teamRecords[homeId].w++;
+          teamRecords[awayId].l++;
+        } else if (g.teams.away.isWinner) {
+          teamRecords[awayId].w++;
+          teamRecords[homeId].l++;
+        }
+      });
+
+      ['Central League', 'Pacific League'].forEach(div => {
+        console.log(`\n   ${div}:`);
+        const seenIds = new Set();
+        const divTeams = [];
+        Object.values(NPB_TEAM_MAPPING).forEach(t => {
+          if (t.division === div && !seenIds.has(t.id)) {
+            seenIds.add(t.id);
+            divTeams.push(t);
+          }
+        });
+        divTeams
+          .sort((a, b) => {
+            const recA = teamRecords[a.id] || { w: 0, l: 0, t: 0 };
+            const recB = teamRecords[b.id] || { w: 0, l: 0, t: 0 };
+            const pctA = (recA.w + recA.l) > 0 ? recA.w / (recA.w + recA.l) : 0;
+            const pctB = (recB.w + recB.l) > 0 ? recB.w / (recB.w + recB.l) : 0;
+            return pctB - pctA;
+          })
+          .forEach((t, idx) => {
+            const r = teamRecords[t.id] || { w: 0, l: 0, t: 0 };
+            const total = r.w + r.l + r.t;
+            const pct = (r.w + r.l) > 0 ? (r.w / (r.w + r.l)).toFixed(3) : '.000';
+            console.log(`     ${idx + 1}. ${t.abbrev.padEnd(5)} ${r.w}W-${r.l}L-${r.t}T (${total} GP)  PCT: ${pct}`);
+          });
+      });
+
+      saveDataset(season, dedupedGames, dedupedPsGames);
+      return dedupedGames;
+    }
   }
 
-  const metaObj = {
-    league,
-    season: String(season),
-    lastUpdated: now.toISOString(),
-    lastUpdatedPT: ptString,
-    lastScraped: now.toISOString(),
-    lastScrapedPT: ptString,
-    totalGames: Array.isArray(games) ? games.length : 0,
-    completedGames: Array.isArray(games) ? games.filter(g => g.status?.detailedState === 'Final').length : 0
-  };
+  // Months active in NPB regular season (04 = Mar/Apr, 05 = May, 06 = Jun, 07 = Jul, 08 = Aug, 09 = Sep, 10 = Oct, 11 = Nov for Olympic-delayed seasons)
+  const months = ['04', '05', '06', '07', '08', '09', '10', '11'];
+  const allGames = [];
+  const allPostseasonGames = [];
 
-  const serialized = JSON.stringify(metaObj, null, 2);
-  const candidateDirs = [
-    path.join(rootDir, 'public', 'data', league),
-    path.join(rootDir, 'src', 'data', league),
-    path.join(rootDir, 'data', league)
-  ];
+  for (const month of months) {
+    try {
+      const html = await fetchMonthHtml(season, month, { forceRefresh });
+      if (!html) {
+        continue;
+      }
+      const monthGames = parseNpbCalendarHtml(html, season, month, { includePostseason: false });
+      console.log(`  Month ${month}: parsed ${monthGames.length} regular season games`);
+      allGames.push(...monthGames);
 
-  candidateDirs.forEach(dir => {
-    if (fs.existsSync(dir)) {
-      const metaPath = path.join(dir, 'metadata.json');
-      fs.writeFileSync(metaPath, serialized, 'utf-8');
-      console.log(`  ⏱️ [Metadata] ${path.relative(rootDir, metaPath)} (${ptString})`);
+      // Parse and collect postseason games in October and November
+      if (month === '10' || month === '11') {
+        const monthAllGames = parseNpbCalendarHtml(html, season, month, { includePostseason: true });
+        const psOnly = monthAllGames.filter(g => g.stage && (
+          g.stage.toLowerCase().includes('cs') ||
+          g.stage.toLowerCase().includes('stage') ||
+          g.stage.toLowerCase().includes('climax') ||
+          g.stage.toLowerCase().includes('japan') ||
+          g.stage.toLowerCase().includes('nippon')
+        ));
+        allPostseasonGames.push(...psOnly);
+      }
+    } catch (err) {
+      console.error(`  ❌ Error processing month ${month}:`, err.message);
+    }
+  }
+
+  // Deduplicate and sort chronologically by officialDate and gamePk
+  const uniqueMap = new Map();
+  allGames.forEach(g => {
+    uniqueMap.set(g.gamePk, g);
+  });
+  dedupedGames = Array.from(uniqueMap.values());
+
+  dedupedGames.sort((a, b) => {
+    if (a.officialDate !== b.officialDate) {
+      return a.officialDate.localeCompare(b.officialDate);
+    }
+    return String(a.gamePk).localeCompare(String(b.gamePk));
+  });
+
+  const uniquePsMap = new Map();
+  allPostseasonGames.forEach(g => {
+    uniquePsMap.set(g.gamePk, g);
+  });
+  dedupedPsGames = Array.from(uniquePsMap.values());
+
+  const finalGames = dedupedGames.filter(g => g.status?.detailedState === 'Final');
+  const tieGames = finalGames.filter(g => g.isTie);
+
+  console.log(`\n📊 Season Summary (${season}):`);
+  console.log(`   Total Games Recorded: ${dedupedGames.length}`);
+  console.log(`   Final Games Completed: ${finalGames.length}`);
+  console.log(`   Tie Games: ${tieGames.length}`);
+  console.log(`   Postseason Games Scraped: ${dedupedPsGames.length}`);
+
+  // Summary per team by division
+  const teamRecords = {};
+  finalGames.forEach(g => {
+    const home = g.teams.home;
+    const away = g.teams.away;
+
+    if (!teamRecords[home.team.id]) {
+      teamRecords[home.team.id] = { name: home.team.name, division: home.team.division, w: 0, l: 0, t: 0 };
+    }
+    if (!teamRecords[away.team.id]) {
+      teamRecords[away.team.id] = { name: away.team.name, division: away.team.division, w: 0, l: 0, t: 0 };
+    }
+
+    if (g.isTie) {
+      teamRecords[home.team.id].t += 1;
+      teamRecords[away.team.id].t += 1;
+    } else if (home.isWinner) {
+      teamRecords[home.team.id].w += 1;
+      teamRecords[away.team.id].l += 1;
+    } else if (away.isWinner) {
+      teamRecords[away.team.id].w += 1;
+      teamRecords[home.team.id].l += 1;
     }
   });
 
-  const scrapeMetaFile = path.join(rootDir, 'src', 'constants', 'scrapeMeta.js');
-  if (fs.existsSync(scrapeMetaFile)) {
-    try {
-      let content = fs.readFileSync(scrapeMetaFile, 'utf-8');
-      const lgRegex = new RegExp(`(${league}\\s*:\\s*{[\\s\\S]*?lastScraped:\\s*['"])([^'"]+)(['"])`);
-      if (lgRegex.test(content)) {
-        content = content.replace(lgRegex, `$1${ptString}$3`);
-      }
-      const isoRegex = new RegExp(`(${league}\\s*:\\s*{[\\s\\S]*?iso:\\s*['"])([^'"]+)(['"])`);
-      if (isoRegex.test(content)) {
-        content = content.replace(isoRegex, `$1${now.toISOString()}$3`);
-      }
-      fs.writeFileSync(scrapeMetaFile, content, 'utf-8');
-    } catch (_e) {}
-  }
+  const centralTeams = Object.values(teamRecords).filter(t => t.division === 'Central League');
+  const pacificTeams = Object.values(teamRecords).filter(t => t.division === 'Pacific League');
+
+  const printDivision = (title, teams) => {
+    console.log(`\n🏆 ${title} Standings (W-L-T):`);
+    teams
+      .sort((a, b) => {
+        const pctA = (a.w + a.l) > 0 ? a.w / (a.w + a.l) : 0;
+        const pctB = (b.w + b.l) > 0 ? b.w / (b.w + b.l) : 0;
+        return pctB - pctA;
+      })
+      .forEach((t, idx) => {
+        const pct = (t.w + t.l) > 0 ? (t.w / (t.w + t.l)).toFixed(3) : '.000';
+        console.log(`   ${String(idx + 1).padStart(2, ' ')}. ${t.name.padEnd(28, ' ')} ${t.w}-${t.l}-${t.t}  (${pct})`);
+      });
+  };
+
+  printDivision('Central League', centralTeams);
+  printDivision('Pacific League', pacificTeams);
+
+  saveDataset(season, dedupedGames, dedupedPsGames);
+  return dedupedGames;
 }
 
 // CLI Execution entry point

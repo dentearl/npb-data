@@ -9,6 +9,11 @@ on:
     # 15:30 UTC daily = 00:30 JST (late-night safety sweep for 12-inning games / rain delays)
     - cron: '30 15 * * *'
   workflow_dispatch:
+    inputs:
+      seasons:
+        description: 'Season to scrape (default: 2026, or "all" for 2005-2026)'
+        required: false
+        default: '2026'
 
 permissions:
   contents: write
@@ -26,7 +31,17 @@ jobs:
           node-version: 22
 
       - name: Run NPB Scraper
-        run: node scripts/scrapeNPB.js --season 2026
+        run: |
+          if [ "${{ github.event.inputs.seasons }}" = "all" ]; then
+            echo "Running one-off historical scrape for all seasons (2005-2026)..."
+            node scripts/scrapeNPB.js --all
+          elif [ -n "${{ github.event.inputs.seasons }}" ]; then
+            echo "Running scrape for season ${{ github.event.inputs.seasons }}..."
+            node scripts/scrapeNPB.js --season "${{ github.event.inputs.seasons }}"
+          else
+            echo "Running regular scheduled scrape for current season (2026)..."
+            node scripts/scrapeNPB.js --season 2026
+          fi
 
       - name: Commit and push if updated
         run: |
@@ -34,7 +49,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           if ! git diff --quiet data/; then
             git add data/
-            git commit -m "Update NPB 2026 regular season data [skip ci]"
+            SEASON_LABEL="${{ github.event.inputs.seasons || '2026' }}"
+            git commit -m "Update NPB ${SEASON_LABEL} regular season data [skip ci]"
             git push
             echo "Successfully committed and pushed updated NPB data."
           else

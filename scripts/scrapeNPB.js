@@ -28,6 +28,7 @@ export const NPB_TEAM_MAPPING = {
   'G':  { id: 3001, abbrev: 'YOM',  name: 'Yomiuri Giants', nativeName: '読売ジャイアンツ', league: 'NPB', division: 'Central League' },
   'T':  { id: 3002, abbrev: 'HAN',  name: 'Hanshin Tigers', nativeName: '阪神タイガース', league: 'NPB', division: 'Central League' },
   'DB': { id: 3003, abbrev: 'DeNA', name: 'Yokohama DeNA BayStars', nativeName: '横浜DeNAベイスターズ', league: 'NPB', division: 'Central League' },
+  'YB': { id: 3003, abbrev: 'DeNA', name: 'Yokohama DeNA BayStars', nativeName: '横浜DeNAベイスターズ', league: 'NPB', division: 'Central League' },
   'C':  { id: 3004, abbrev: 'HIR',  name: 'Hiroshima Toyo Carp', nativeName: '広島東洋カープ', league: 'NPB', division: 'Central League' },
   'D':  { id: 3005, abbrev: 'CHU',  name: 'Chunichi Dragons', nativeName: '中日ドラゴンズ', league: 'NPB', division: 'Central League' },
   'S':  { id: 3006, abbrev: 'YAK',  name: 'Tokyo Yakult Swallows', nativeName: '東京ヤクルトスワローズ', league: 'NPB', division: 'Central League' },
@@ -50,6 +51,7 @@ export const NPB_ALIASES = {
   'TIGERS': 3002,
   'HANSHIN': 3002,
   'DENA': 3003,
+  'YB': 3003,
   'BAYSTARS': 3003,
   'YOKOHAMA': 3003,
   'HIR': 3004,
@@ -153,28 +155,71 @@ async function fetchMonthHtml(season, month, options = {}) {
     }
   }
 
-  const url = `https://npb.jp/bis/eng/${season}/calendar/index_${month}.html`;
-  console.log(`  🌐 [Network Fetch] Requesting ${url} ...`);
-  // Polite courtesy delay before hitting the external server
-  await sleep(400);
+  const candidateUrls = [
+    `https://npb.jp/bis/eng/${season}/calendar/index_${month}.html`,
+    `https://npb.jp/bis/${season}/calendar/index_${month}.html`
+  ];
 
-  const response = await fetch(url, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-    }
-  });
+  const headers = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'same-origin',
+    'Upgrade-Insecure-Requests': '1'
+  };
 
-  if (!response.ok) {
-    if (response.status === 404 && month === '11') {
-      return '';
+  // Polite courtesy delay with jitter (3.0s - 4.5s) to strictly respect NPB anti-scraping limits
+  const delayMs = Math.floor(3000 + Math.random() * 1500);
+  console.log(`  ⏳ [Rate Limit] Pacing requests (${(delayMs / 1000).toFixed(1)}s delay)...`);
+  await sleep(delayMs);
+
+  let lastError = null;
+  for (const url of candidateUrls) {
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        console.log(`  🌐 [Network Fetch] Requesting ${url}${attempt > 1 ? ` (Attempt ${attempt}/3)` : ''} ...`);
+        const response = await fetch(url, { headers });
+
+        if (response.ok) {
+          const html = await response.text();
+          if (html && html.length > 500) {
+            fs.writeFileSync(cacheFile, html, 'utf-8');
+            return html;
+          }
+        }
+
+        if (response.status === 404) {
+          if (month === '11') return '';
+          // Try next candidate URL (e.g. Japanese fallback)
+          break;
+        }
+
+        if (response.status === 429 || response.status === 503) {
+          const backoff = attempt * 8000 + Math.floor(Math.random() * 4000);
+          console.warn(`  ⚠️ Server status ${response.status}. Backing off for ${(backoff / 1000).toFixed(1)}s...`);
+          await sleep(backoff);
+          continue;
+        }
+
+        throw new Error(`NPB server HTTP error ${response.status}: ${response.statusText}`);
+      } catch (err) {
+        lastError = err;
+        if (attempt < 3) {
+          const backoff = attempt * 5000;
+          console.warn(`  ⚠️ Request attempt ${attempt} failed: ${err.message}. Retrying in ${(backoff / 1000).toFixed(1)}s...`);
+          await sleep(backoff);
+        }
+      }
     }
-    throw new Error(`NPB server HTTP error ${response.status}: ${response.statusText}`);
   }
 
-  const html = await response.text();
-  fs.writeFileSync(cacheFile, html, 'utf-8');
-  return html;
+  if (month === '11') {
+    return '';
+  }
+
+  throw lastError || new Error(`Unable to fetch NPB calendar for ${season}-${month}`);
 }
 
 /**
@@ -1043,37 +1088,38 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
     }
   }
 
-  // Compile & Write Postseason Data
+  // Compile & Write Postseason Data (Active 2026 season)
   const sStr = String(season);
-  const postseasonData = parseNpbPostseason(dedupedPsGames, dedupedGames, sStr);
-  const serializedPostseason = JSON.stringify(postseasonData, null, 2);
-  const postseasonTargets = [];
-  if (fs.existsSync(path.join(rootDir, 'public'))) {
-    postseasonTargets.push(path.join(publicDir, 'postseason.json'));
-  }
-  if (fs.existsSync(path.join(rootDir, 'src'))) {
-    postseasonTargets.push(path.join(srcDataDir, 'postseason.json'));
-  }
-  if (postseasonTargets.length === 0 || fs.existsSync(standaloneDir)) {
-    postseasonTargets.push(path.join(standaloneDir, 'postseason.json'));
-  }
-
-  postseasonTargets.forEach(targetFile => {
-    const parent = path.dirname(targetFile);
-    if (!fs.existsSync(parent)) {
-      fs.mkdirSync(parent, { recursive: true });
+  if (sStr === '2026') {
+    const postseasonData = parseNpbPostseason(dedupedPsGames, dedupedGames, sStr);
+    const serializedPostseason = JSON.stringify(postseasonData, null, 2);
+    const postseasonTargets = [];
+    if (fs.existsSync(path.join(rootDir, 'public'))) {
+      postseasonTargets.push(path.join(publicDir, 'postseason.json'));
     }
-    fs.writeFileSync(targetFile, serializedPostseason, 'utf-8');
-    console.log(`  🏆 [Written] ${path.relative(rootDir, targetFile)} (${(serializedPostseason.length / 1024).toFixed(1)} KB)`);
-  });
+    if (fs.existsSync(path.join(rootDir, 'src'))) {
+      postseasonTargets.push(path.join(srcDataDir, 'postseason.json'));
+    }
+    if (postseasonTargets.length === 0 || fs.existsSync(standaloneDir)) {
+      postseasonTargets.push(path.join(standaloneDir, 'postseason.json'));
+    }
 
-  // Write Postseason Embedded JS
-  if (fs.existsSync(srcDataDir)) {
-    const embeddedPostseasonJsTarget = path.join(srcDataDir, 'postseason.js');
-    const psJsContent = `/**
- * Embedded NPB Postseason Series Dataset
- * Enables zero-server local execution (file:/// protocol) without CORS restrictions.
- */
+    postseasonTargets.forEach(targetFile => {
+      const parent = path.dirname(targetFile);
+      if (!fs.existsSync(parent)) {
+        fs.mkdirSync(parent, { recursive: true });
+      }
+      fs.writeFileSync(targetFile, serializedPostseason, 'utf-8');
+      console.log(`  🏆 [Written] ${path.relative(rootDir, targetFile)} (${(serializedPostseason.length / 1024).toFixed(1)} KB)`);
+    });
+
+    // Write Postseason Embedded JS
+    if (fs.existsSync(srcDataDir)) {
+      const embeddedPostseasonJsTarget = path.join(srcDataDir, 'postseason.js');
+      const psJsContent = `/**
+   * Embedded NPB Postseason Series Dataset
+   * Enables zero-server local execution (file:/// protocol) without CORS restrictions.
+   */
 (function() {
   const postseason = ${serializedPostseason};
   if (typeof window !== "undefined") {
@@ -1087,12 +1133,13 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
   }
 })();
 `;
-    fs.writeFileSync(embeddedPostseasonJsTarget, psJsContent, 'utf-8');
-    console.log(`  🏆 [Written] ${path.relative(rootDir, embeddedPostseasonJsTarget)} (${(psJsContent.length / 1024).toFixed(1)} KB)`);
-  }
+      fs.writeFileSync(embeddedPostseasonJsTarget, psJsContent, 'utf-8');
+      console.log(`  🏆 [Written] ${path.relative(rootDir, embeddedPostseasonJsTarget)} (${(psJsContent.length / 1024).toFixed(1)} KB)`);
+    }
 
-  // Update src/constants/postseasonSeriesData.js with synced postseason results if file exists
-  updateNpbPostseasonSeriesDataConstant(rootDir, postseasonData[sStr] || postseasonData['2026']);
+    // Update src/constants/postseasonSeriesData.js with synced postseason results if file exists
+    updateNpbPostseasonSeriesDataConstant(rootDir, postseasonData['2026']);
+  }
 
   // Save scrape metadata with timestamp
   saveScrapeMetadata(rootDir, 'npb', season, dedupedGames);
@@ -1176,7 +1223,7 @@ if (process.argv[1] && process.argv[1].endsWith('scrapeNPB.js')) {
       seasons = args[i + 1].split(',').map(s => s.trim()).filter(Boolean);
       i++;
     } else if (args[i] === '--all') {
-      seasons = ['2021', '2022', '2023', '2024', '2025', '2026'];
+      seasons = Array.from({ length: 2026 - 2005 + 1 }, (_, k) => String(2005 + k));
     } else if (args[i] === '--force' || args[i] === '--no-cache') {
       forceRefresh = true;
     }

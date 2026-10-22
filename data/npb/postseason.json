@@ -308,46 +308,46 @@
         {
           "game": 1,
           "date": "2026-10-24",
-          "away": "Pacific League Champion",
-          "home": "Central League Champion"
+          "away": "Fukuoka SoftBank Hawks",
+          "home": "Yokohama DeNA BayStars"
         },
         {
           "game": 2,
           "date": "2026-10-25",
-          "away": "Pacific League Champion",
-          "home": "Central League Champion"
+          "away": "Fukuoka SoftBank Hawks",
+          "home": "Yokohama DeNA BayStars"
         },
         {
           "game": 3,
           "date": "2026-10-27",
-          "away": "Central League Champion",
-          "home": "Pacific League Champion"
+          "away": "Yokohama DeNA BayStars",
+          "home": "Fukuoka SoftBank Hawks"
         },
         {
           "game": 4,
           "date": "2026-10-28",
-          "away": "Central League Champion",
-          "home": "Pacific League Champion"
+          "away": "Yokohama DeNA BayStars",
+          "home": "Fukuoka SoftBank Hawks"
         },
         {
           "game": 5,
           "date": "2026-10-29",
-          "away": "Central League Champion",
-          "home": "Pacific League Champion",
+          "away": "Yokohama DeNA BayStars",
+          "home": "Fukuoka SoftBank Hawks",
           "ifNeeded": true
         },
         {
           "game": 6,
           "date": "2026-10-31",
-          "away": "Pacific League Champion",
-          "home": "Central League Champion",
+          "away": "Fukuoka SoftBank Hawks",
+          "home": "Yokohama DeNA BayStars",
           "ifNeeded": true
         },
         {
           "game": 7,
           "date": "2026-11-01",
-          "away": "Pacific League Champion",
-          "home": "Central League Champion",
+          "away": "Fukuoka SoftBank Hawks",
+          "home": "Yokohama DeNA BayStars",
           "ifNeeded": true
         }
       ]

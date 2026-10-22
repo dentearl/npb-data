@@ -577,18 +577,18 @@ export function getDefault2026NpbPostseasonData() {
       japanSeries: {
         name: 'Japan Series',
         format: 'Best of 7',
-        clTeam: { name: 'Central League Champion', shortName: 'CL Champ', wins: 0, isWinner: false },
-        plTeam: { name: 'Pacific League Champion', shortName: 'PL Champ', wins: 0, isWinner: false },
+        clTeam: { id: 3003, name: 'Yokohama DeNA BayStars', shortName: 'BayStars', wins: 0, isWinner: false },
+        plTeam: { id: 3007, name: 'Fukuoka SoftBank Hawks', shortName: 'Hawks', wins: 0, isWinner: false },
         isStarted: false,
         isComplete: false,
         games: [
-          { game: 1, date: '2026-10-24', away: 'Pacific League Champion', home: 'Central League Champion' },
-          { game: 2, date: '2026-10-25', away: 'Pacific League Champion', home: 'Central League Champion' },
-          { game: 3, date: '2026-10-27', away: 'Central League Champion', home: 'Pacific League Champion' },
-          { game: 4, date: '2026-10-28', away: 'Central League Champion', home: 'Pacific League Champion' },
-          { game: 5, date: '2026-10-29', away: 'Central League Champion', home: 'Pacific League Champion', ifNeeded: true },
-          { game: 6, date: '2026-10-31', away: 'Pacific League Champion', home: 'Central League Champion', ifNeeded: true },
-          { game: 7, date: '2026-11-01', away: 'Pacific League Champion', home: 'Central League Champion', ifNeeded: true }
+          { game: 1, date: '2026-10-24', away: 'Fukuoka SoftBank Hawks', home: 'Yokohama DeNA BayStars' },
+          { game: 2, date: '2026-10-25', away: 'Fukuoka SoftBank Hawks', home: 'Yokohama DeNA BayStars' },
+          { game: 3, date: '2026-10-27', away: 'Yokohama DeNA BayStars', home: 'Fukuoka SoftBank Hawks' },
+          { game: 4, date: '2026-10-28', away: 'Yokohama DeNA BayStars', home: 'Fukuoka SoftBank Hawks' },
+          { game: 5, date: '2026-10-29', away: 'Yokohama DeNA BayStars', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
+          { game: 6, date: '2026-10-31', away: 'Fukuoka SoftBank Hawks', home: 'Yokohama DeNA BayStars', ifNeeded: true },
+          { game: 7, date: '2026-11-01', away: 'Fukuoka SoftBank Hawks', home: 'Yokohama DeNA BayStars', ifNeeded: true }
         ]
       }
     }
@@ -1218,6 +1218,71 @@ function saveScrapeMetadata(rootDir, league, season, games) {
 }
 
 /**
+ * Safely merges newly scraped NPB postseason data with existing on-disk postseason data.
+ * Prevents downgrading completed series (isComplete: true) or wiping out completed games
+ * if scraping fails or returns an unstarted template.
+ */
+export function mergeNpbPostseason(existingData, newData, seasonKey = '2026') {
+  if (!existingData || !existingData[seasonKey]) return newData;
+  if (!newData || !newData[seasonKey]) return existingData;
+
+  const existingSeason = existingData[seasonKey];
+  const newSeason = JSON.parse(JSON.stringify(newData[seasonKey]));
+  const merged = { ...newSeason };
+
+  function mergeSeries(existingSeries, incomingSeries) {
+    if (!existingSeries) return incomingSeries;
+    if (!incomingSeries) return existingSeries;
+
+    const existingGames = Array.isArray(existingSeries.games) ? existingSeries.games : [];
+    const incomingGames = Array.isArray(incomingSeries.games) ? incomingSeries.games : [];
+
+    const existingFinals = existingGames.filter(g => g.isFinal).length;
+    const incomingFinals = incomingGames.filter(g => g.isFinal).length;
+
+    if (existingSeries.isComplete && !incomingSeries.isComplete) {
+      return existingSeries;
+    }
+    if (existingFinals > incomingFinals) {
+      return existingSeries;
+    }
+
+    const res = { ...incomingSeries };
+    ['team1', 'team2', 'team3', 'adv', 'clTeam', 'plTeam'].forEach(key => {
+      if (existingSeries[key] && existingSeries[key].id && (!res[key] || !res[key].id)) {
+        res[key] = existingSeries[key];
+      }
+    });
+
+    return res;
+  }
+
+  if (existingSeason.CL) {
+    merged.CL = merged.CL || {};
+    merged.CL.firstStage = mergeSeries(existingSeason.CL.firstStage, merged.CL.firstStage);
+    merged.CL.finalStage = mergeSeries(existingSeason.CL.finalStage, merged.CL.finalStage);
+    if (existingSeason.CL.pennantWinner && (!merged.CL.pennantWinner || !merged.CL.pennantWinner.id)) {
+      merged.CL.pennantWinner = existingSeason.CL.pennantWinner;
+    }
+  }
+
+  if (existingSeason.PL) {
+    merged.PL = merged.PL || {};
+    merged.PL.firstStage = mergeSeries(existingSeason.PL.firstStage, merged.PL.firstStage);
+    merged.PL.finalStage = mergeSeries(existingSeason.PL.finalStage, merged.PL.finalStage);
+    if (existingSeason.PL.pennantWinner && (!merged.PL.pennantWinner || !merged.PL.pennantWinner.id)) {
+      merged.PL.pennantWinner = existingSeason.PL.pennantWinner;
+    }
+  }
+
+  if (existingSeason.japanSeries) {
+    merged.japanSeries = mergeSeries(existingSeason.japanSeries, merged.japanSeries);
+  }
+
+  return { [seasonKey]: merged };
+}
+
+/**
  * Persists compiled NPB games and postseason datasets to all appropriate directories
  */
 export function saveDataset(season, dedupedGames, dedupedPsGames = []) {
@@ -1243,8 +1308,32 @@ export function saveDataset(season, dedupedGames, dedupedPsGames = []) {
     }
   });
 
+  // Safety guard: if newly scraped games is empty, but an existing target file has games, preserve existing games
+  let gamesToWrite = dedupedGames;
+  if (!Array.isArray(gamesToWrite) || gamesToWrite.length === 0) {
+    let existingGameCount = 0;
+    let existingGamesOnDisk = null;
+    for (const t of targets) {
+      if (fs.existsSync(t)) {
+        try {
+          const parsed = JSON.parse(fs.readFileSync(t, 'utf-8'));
+          const gamesArr = Array.isArray(parsed) ? parsed : (Array.isArray(parsed?.games) ? parsed.games : null);
+          if (gamesArr && gamesArr.length > existingGameCount) {
+            existingGameCount = gamesArr.length;
+            existingGamesOnDisk = gamesArr;
+          }
+        } catch (_e) {}
+      }
+    }
+    if (existingGameCount > 0) {
+      console.warn(`  ⚠️ [Safety Guard] Scraped game count is 0, but existing dataset has ${existingGameCount} games. Preserving existing games to prevent data loss.`);
+      gamesToWrite = existingGamesOnDisk;
+      dedupedGames = existingGamesOnDisk;
+    }
+  }
+
   // Check if any existing target file has a postseason block to preserve
-  let fileData = dedupedGames;
+  let fileData = gamesToWrite;
   let existingPostseason = null;
   for (const t of targets) {
     if (fs.existsSync(t)) {
@@ -1261,7 +1350,7 @@ export function saveDataset(season, dedupedGames, dedupedPsGames = []) {
   if (existingPostseason) {
     fileData = {
       season: String(season),
-      games: dedupedGames,
+      games: gamesToWrite,
       postseason: existingPostseason
     };
   }
@@ -1322,8 +1411,7 @@ export function saveDataset(season, dedupedGames, dedupedPsGames = []) {
   // Compile & Write Postseason Data (Active 2026 season)
   const sStr = String(season);
   if (sStr === '2026') {
-    const postseasonData = parseNpbPostseason(dedupedPsGames, dedupedGames, sStr);
-    const serializedPostseason = JSON.stringify(postseasonData, null, 2);
+    let postseasonData = parseNpbPostseason(dedupedPsGames, dedupedGames, sStr);
     const postseasonTargets = [];
     if (fs.existsSync(path.join(rootDir, 'public'))) {
       postseasonTargets.push(path.join(publicDir, 'postseason.json'));
@@ -1334,6 +1422,26 @@ export function saveDataset(season, dedupedGames, dedupedPsGames = []) {
     if (postseasonTargets.length === 0 || fs.existsSync(standaloneDir)) {
       postseasonTargets.push(path.join(standaloneDir, 'postseason.json'));
     }
+
+    // Safety guard: merge with existing on-disk postseason data to avoid clobbering completed series
+    let existingDiskPostseason = null;
+    for (const pt of postseasonTargets) {
+      if (fs.existsSync(pt)) {
+        try {
+          const parsed = JSON.parse(fs.readFileSync(pt, 'utf-8'));
+          if (parsed && parsed['2026']) {
+            existingDiskPostseason = parsed;
+            break;
+          }
+        } catch (_e) {}
+      }
+    }
+
+    if (existingDiskPostseason) {
+      postseasonData = mergeNpbPostseason(existingDiskPostseason, postseasonData, '2026');
+    }
+
+    const serializedPostseason = JSON.stringify(postseasonData, null, 2);
 
     postseasonTargets.forEach(targetFile => {
       const parent = path.dirname(targetFile);

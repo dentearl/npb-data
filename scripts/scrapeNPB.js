@@ -136,6 +136,13 @@ async function fetchMonthHtml(season, month, options = {}) {
   const currentYear = now.getFullYear();
   const monthNum = parseInt(month, 10);
 
+  // Future months for the current year or later haven't occurred yet
+  const isFutureMonth = (parseInt(season, 10) > currentYear) ||
+                        (parseInt(season, 10) === currentYear && monthNum > currentMonthNum);
+  if (isFutureMonth) {
+    return '';
+  }
+
   // Month 04 includes March and April. Consider month past if year < current or month < current
   const isPastMonth = (parseInt(season, 10) < currentYear) || 
                       (parseInt(season, 10) === currentYear && monthNum < currentMonthNum);
@@ -217,6 +224,15 @@ async function fetchMonthHtml(season, month, options = {}) {
 
   if (month === '11') {
     return '';
+  }
+
+  if (fs.existsSync(cacheFile)) {
+    try {
+      console.warn(`  ⚠️ Network fetch failed for ${season}-${month}. Falling back to cached file.`);
+      return fs.readFileSync(cacheFile, 'utf-8');
+    } catch {
+      // ignore
+    }
   }
 
   throw lastError || new Error(`Unable to fetch NPB calendar for ${season}-${month}`);
@@ -478,7 +494,7 @@ export function getDefault2026NpbPostseasonData() {
   return {
     '2026': {
       era: 'climax_series',
-      isStarted: false,
+      isStarted: true,
       isComplete: false,
       CL: {
         seeds: {
@@ -489,31 +505,31 @@ export function getDefault2026NpbPostseasonData() {
         firstStage: {
           name: 'Central League First Stage',
           format: 'Best of 3',
-          team2: { id: 3001, name: 'Yomiuri Giants', shortName: 'Giants', wins: 0, isWinner: false, isEliminated: false },
-          team3: { id: 3003, name: 'Yokohama DeNA BayStars', shortName: 'BayStars', wins: 0, isWinner: false, isEliminated: false },
-          isStarted: false,
-          isComplete: false,
+          team2: { id: 3001, name: 'Yomiuri Giants', shortName: 'Giants', wins: 0, isWinner: false, isEliminated: true },
+          team3: { id: 3003, name: 'Yokohama DeNA BayStars', shortName: 'BayStars', wins: 2, isWinner: true, isEliminated: false },
+          isStarted: true,
+          isComplete: true,
           games: [
-            { game: 1, date: '2026-10-10', away: 'Yokohama DeNA BayStars', home: 'Yomiuri Giants' },
-            { game: 2, date: '2026-10-11', away: 'Yokohama DeNA BayStars', home: 'Yomiuri Giants' },
-            { game: 3, date: '2026-10-12', away: 'Yokohama DeNA BayStars', home: 'Yomiuri Giants', ifNeeded: true }
-          ]
+            { game: 1, date: '2026-10-10', away: 'Yomiuri Giants', home: 'Yokohama DeNA BayStars', awayScore: 1, homeScore: 2, winnerId: 3003, isFinal: true },
+            { game: 2, date: '2026-10-11', away: 'Yomiuri Giants', home: 'Yokohama DeNA BayStars', awayScore: 1, homeScore: 4, winnerId: 3003, isFinal: true }
+          ],
+          winnerId: 3003
         },
         finalStage: {
           name: 'Central League Final Stage',
           format: 'Best of 6 (+1 Adv)',
           winsNeeded: 4,
           team1: { id: 3002, name: 'Hanshin Tigers', shortName: 'Tigers', wins: 1, advantageWins: 1, isWinner: false, isEliminated: false, hasAdvantage: true },
-          adv: { name: 'First Stage Winner', shortName: 'First Winner', wins: 0, isWinner: false, isEliminated: false },
+          adv: { id: 3003, name: 'Yokohama DeNA BayStars', shortName: 'BayStars', wins: 0, isWinner: false, isEliminated: false },
           isStarted: false,
           isComplete: false,
           games: [
-            { game: 1, date: '2026-10-14', away: 'First Stage Winner', home: 'Hanshin Tigers' },
-            { game: 2, date: '2026-10-15', away: 'First Stage Winner', home: 'Hanshin Tigers' },
-            { game: 3, date: '2026-10-16', away: 'First Stage Winner', home: 'Hanshin Tigers' },
-            { game: 4, date: '2026-10-17', away: 'First Stage Winner', home: 'Hanshin Tigers', ifNeeded: true },
-            { game: 5, date: '2026-10-18', away: 'First Stage Winner', home: 'Hanshin Tigers', ifNeeded: true },
-            { game: 6, date: '2026-10-19', away: 'First Stage Winner', home: 'Hanshin Tigers', ifNeeded: true }
+            { game: 1, date: '2026-10-14', away: 'Yokohama DeNA BayStars', home: 'Hanshin Tigers' },
+            { game: 2, date: '2026-10-15', away: 'Yokohama DeNA BayStars', home: 'Hanshin Tigers' },
+            { game: 3, date: '2026-10-16', away: 'Yokohama DeNA BayStars', home: 'Hanshin Tigers' },
+            { game: 4, date: '2026-10-17', away: 'Yokohama DeNA BayStars', home: 'Hanshin Tigers', ifNeeded: true },
+            { game: 5, date: '2026-10-18', away: 'Yokohama DeNA BayStars', home: 'Hanshin Tigers', ifNeeded: true },
+            { game: 6, date: '2026-10-19', away: 'Yokohama DeNA BayStars', home: 'Hanshin Tigers', ifNeeded: true }
           ]
         },
         pennantWinner: null
@@ -527,32 +543,33 @@ export function getDefault2026NpbPostseasonData() {
         firstStage: {
           name: 'Pacific League First Stage',
           format: 'Best of 3',
-          team2: { id: 3012, name: 'Saitama Seibu Lions', shortName: 'Lions', wins: 0, isWinner: false, isEliminated: false },
-          team3: { id: 3008, name: 'Hokkaido Nippon-Ham Fighters', shortName: 'Fighters', wins: 0, isWinner: false, isEliminated: false },
-          isStarted: false,
-          isComplete: false,
+          team2: { id: 3012, name: 'Saitama Seibu Lions', shortName: 'Lions', wins: 1, isWinner: false, isEliminated: true },
+          team3: { id: 3008, name: 'Hokkaido Nippon-Ham Fighters', shortName: 'Fighters', wins: 2, isWinner: true, isEliminated: false },
+          isStarted: true,
+          isComplete: true,
           games: [
-            { game: 1, date: '2026-10-10', away: 'Hokkaido Nippon-Ham Fighters', home: 'Saitama Seibu Lions' },
-            { game: 2, date: '2026-10-11', away: 'Hokkaido Nippon-Ham Fighters', home: 'Saitama Seibu Lions' },
-            { game: 3, date: '2026-10-12', away: 'Hokkaido Nippon-Ham Fighters', home: 'Saitama Seibu Lions', ifNeeded: true }
-          ]
+            { game: 1, date: '2026-10-10', away: 'Saitama Seibu Lions', home: 'Hokkaido Nippon-Ham Fighters', awayScore: 3, homeScore: 2, winnerId: 3012, isFinal: true },
+            { game: 2, date: '2026-10-11', away: 'Saitama Seibu Lions', home: 'Hokkaido Nippon-Ham Fighters', awayScore: 0, homeScore: 1, winnerId: 3008, isFinal: true },
+            { game: 3, date: '2026-10-12', away: 'Saitama Seibu Lions', home: 'Hokkaido Nippon-Ham Fighters', awayScore: 1, homeScore: 4, winnerId: 3008, isFinal: true }
+          ],
+          winnerId: 3008
         },
         finalStage: {
           name: 'Pacific League Final Stage',
           format: 'Best of 7 (+2 Adv)',
           winsNeeded: 5,
           team1: { id: 3007, name: 'Fukuoka SoftBank Hawks', shortName: 'Hawks', wins: 2, advantageWins: 2, isWinner: false, isEliminated: false, hasAdvantage: true },
-          adv: { name: 'First Stage Winner', shortName: 'First Winner', wins: 0, isWinner: false, isEliminated: false },
+          adv: { id: 3008, name: 'Hokkaido Nippon-Ham Fighters', shortName: 'Fighters', wins: 0, isWinner: false, isEliminated: false },
           isStarted: false,
           isComplete: false,
           games: [
-            { game: 1, date: '2026-10-14', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks' },
-            { game: 2, date: '2026-10-15', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks' },
-            { game: 3, date: '2026-10-16', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks' },
-            { game: 4, date: '2026-10-17', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
-            { game: 5, date: '2026-10-18', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
-            { game: 6, date: '2026-10-19', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
-            { game: 7, date: '2026-10-20', away: 'First Stage Winner', home: 'Fukuoka SoftBank Hawks', ifNeeded: true }
+            { game: 1, date: '2026-10-14', away: 'Hokkaido Nippon-Ham Fighters', home: 'Fukuoka SoftBank Hawks' },
+            { game: 2, date: '2026-10-15', away: 'Hokkaido Nippon-Ham Fighters', home: 'Fukuoka SoftBank Hawks' },
+            { game: 3, date: '2026-10-16', away: 'Hokkaido Nippon-Ham Fighters', home: 'Fukuoka SoftBank Hawks' },
+            { game: 4, date: '2026-10-17', away: 'Hokkaido Nippon-Ham Fighters', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
+            { game: 5, date: '2026-10-18', away: 'Hokkaido Nippon-Ham Fighters', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
+            { game: 6, date: '2026-10-19', away: 'Hokkaido Nippon-Ham Fighters', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
+            { game: 7, date: '2026-10-20', away: 'Hokkaido Nippon-Ham Fighters', home: 'Fukuoka SoftBank Hawks', ifNeeded: true }
           ]
         },
         pennantWinner: null
@@ -1226,7 +1243,30 @@ export function saveDataset(season, dedupedGames, dedupedPsGames = []) {
     }
   });
 
-  const serializedData = JSON.stringify(dedupedGames, null, 2);
+  // Check if any existing target file has a postseason block to preserve
+  let fileData = dedupedGames;
+  let existingPostseason = null;
+  for (const t of targets) {
+    if (fs.existsSync(t)) {
+      try {
+        const parsed = JSON.parse(fs.readFileSync(t, 'utf-8'));
+        if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) && parsed.postseason) {
+          existingPostseason = parsed.postseason;
+          break;
+        }
+      } catch (_e) {}
+    }
+  }
+
+  if (existingPostseason) {
+    fileData = {
+      season: String(season),
+      games: dedupedGames,
+      postseason: existingPostseason
+    };
+  }
+
+  const serializedData = JSON.stringify(fileData, null, 2);
 
   targets.forEach(targetFile => {
     if (fs.existsSync(targetFile)) {
@@ -1248,13 +1288,26 @@ export function saveDataset(season, dedupedGames, dedupedPsGames = []) {
  * Enables zero-server local execution (file:/// protocol) without CORS restrictions.
  */
 (function() {
-  const games = ${serializedData};
+  const dataset = ${serializedData};
+  const games = dataset.games || dataset;
   if (typeof window !== "undefined") {
     window.NPB_STATIC_DATA = window.NPB_STATIC_DATA || {};
     window.NPB_STATIC_DATA["${season}"] = games;
+    if (dataset.postseason) {
+      window.NPB_POSTSEASON_STATIC = window.NPB_POSTSEASON_STATIC || {};
+      window.NPB_POSTSEASON_STATIC["${season}"] = dataset.postseason;
+    }
+  }
+  if (typeof globalThis !== "undefined") {
+    globalThis.NPB_STATIC_DATA = globalThis.NPB_STATIC_DATA || {};
+    globalThis.NPB_STATIC_DATA["${season}"] = games;
+    if (dataset.postseason) {
+      globalThis.NPB_POSTSEASON_STATIC = globalThis.NPB_POSTSEASON_STATIC || {};
+      globalThis.NPB_POSTSEASON_STATIC["${season}"] = dataset.postseason;
+    }
   }
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = games;
+    module.exports = dataset;
   }
 })();
 `;

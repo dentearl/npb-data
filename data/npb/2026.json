@@ -28597,48 +28597,48 @@
     "isTie": false
   },
   {
-    "gamePk": "20260917_HAN_HIR",
+    "gamePk": "2026091701798",
     "gameDate": "2026-09-17T18:00:00+09:00",
     "officialDate": "2026-09-17",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
         "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "abbrev": "NHF",
           "league": "NPB",
-          "division": "Central League"
+          "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 4,
+        "isWinner": true
       },
       "home": {
         "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
+          "id": 3012,
+          "name": "Saitama Seibu Lions",
+          "abbrev": "SEI",
           "league": "NPB",
-          "division": "Central League"
+          "division": "Pacific League"
         },
-        "score": null,
+        "score": 2,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260917_LOT_RAK",
+    "gamePk": "2026091701799",
     "gameDate": "2026-09-17T18:00:00+09:00",
     "officialDate": "2026-09-17",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -28649,7 +28649,7 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 1,
         "isWinner": false
       },
       "home": {
@@ -28660,20 +28660,335 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 5,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091701800",
+    "gameDate": "2026-09-17T18:00:00+09:00",
+    "officialDate": "2026-09-17",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3011,
+          "name": "ORIX Buffaloes",
+          "abbrev": "ORX",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 1,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3007,
+          "name": "Fukuoka SoftBank Hawks",
+          "abbrev": "SBH",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 7,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091701953",
+    "gameDate": "2026-09-17T18:00:00+09:00",
+    "officialDate": "2026-09-17",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3006,
+          "name": "Tokyo Yakult Swallows",
+          "abbrev": "YAK",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 2,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091701954",
+    "gameDate": "2026-09-17T18:00:00+09:00",
+    "officialDate": "2026-09-17",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 7,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 2,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260917_NHF_SEI",
-    "gameDate": "2026-09-17T18:00:00+09:00",
-    "officialDate": "2026-09-17",
+    "gamePk": "2026091801437",
+    "gameDate": "2026-09-18T18:00:00+09:00",
+    "officialDate": "2026-09-18",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 2,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3005,
+          "name": "Chunichi Dragons",
+          "abbrev": "CHU",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 0,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091801438",
+    "gameDate": "2026-09-18T18:00:00+09:00",
+    "officialDate": "2026-09-18",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3006,
+          "name": "Tokyo Yakult Swallows",
+          "abbrev": "YAK",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091801439",
+    "gameDate": "2026-09-18T18:00:00+09:00",
+    "officialDate": "2026-09-18",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 2,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091901440",
+    "gameDate": "2026-09-19T18:00:00+09:00",
+    "officialDate": "2026-09-19",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 14,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3005,
+          "name": "Chunichi Dragons",
+          "abbrev": "CHU",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091901441",
+    "gameDate": "2026-09-19T18:00:00+09:00",
+    "officialDate": "2026-09-19",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 5,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3006,
+          "name": "Tokyo Yakult Swallows",
+          "abbrev": "YAK",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091901442",
+    "gameDate": "2026-09-19T18:00:00+09:00",
+    "officialDate": "2026-09-19",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 5,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091901801",
+    "gameDate": "2026-09-19T18:00:00+09:00",
+    "officialDate": "2026-09-19",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -28681,6 +28996,286 @@
           "id": 3008,
           "name": "Hokkaido Nippon-Ham Fighters",
           "abbrev": "NHF",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 4,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3011,
+          "name": "ORIX Buffaloes",
+          "abbrev": "ORX",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 7,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091901802",
+    "gameDate": "2026-09-19T18:00:00+09:00",
+    "officialDate": "2026-09-19",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3010,
+          "name": "Tohoku Rakuten Golden Eagles",
+          "abbrev": "RAK",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 5,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3007,
+          "name": "Fukuoka SoftBank Hawks",
+          "abbrev": "SBH",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 2,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026091901803",
+    "gameDate": "2026-09-19T18:00:00+09:00",
+    "officialDate": "2026-09-19",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 2,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3012,
+          "name": "Saitama Seibu Lions",
+          "abbrev": "SEI",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 4,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092001443",
+    "gameDate": "2026-09-20T18:00:00+09:00",
+    "officialDate": "2026-09-20",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3006,
+          "name": "Tokyo Yakult Swallows",
+          "abbrev": "YAK",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 2,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092001444",
+    "gameDate": "2026-09-20T18:00:00+09:00",
+    "officialDate": "2026-09-20",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3005,
+          "name": "Chunichi Dragons",
+          "abbrev": "CHU",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 8,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 5,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092001445",
+    "gameDate": "2026-09-20T18:00:00+09:00",
+    "officialDate": "2026-09-20",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 8,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092001804",
+    "gameDate": "2026-09-20T18:00:00+09:00",
+    "officialDate": "2026-09-20",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "abbrev": "NHF",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 6,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3011,
+          "name": "ORIX Buffaloes",
+          "abbrev": "ORX",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 9,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092001805",
+    "gameDate": "2026-09-20T18:00:00+09:00",
+    "officialDate": "2026-09-20",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3010,
+          "name": "Tohoku Rakuten Golden Eagles",
+          "abbrev": "RAK",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 5,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3007,
+          "name": "Fukuoka SoftBank Hawks",
+          "abbrev": "SBH",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 3,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092001806",
+    "gameDate": "2026-09-20T18:00:00+09:00",
+    "officialDate": "2026-09-20",
+    "stage": null,
+    "status": {
+      "detailedState": "Postponed",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
           "league": "NPB",
           "division": "Pacific League"
         },
@@ -28699,800 +29294,20 @@
         "isWinner": false
       }
     },
-    "isTie": false
+    "isTie": false,
+    "isCancelled": true
   },
   {
-    "gamePk": "20260917_ORX_SBH",
-    "gameDate": "2026-09-17T18:00:00+09:00",
-    "officialDate": "2026-09-17",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3011,
-          "name": "ORIX Buffaloes",
-          "abbrev": "ORX",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3007,
-          "name": "Fukuoka SoftBank Hawks",
-          "abbrev": "SBH",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260917_YAK_DeNA",
-    "gameDate": "2026-09-17T18:00:00+09:00",
-    "officialDate": "2026-09-17",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3006,
-          "name": "Tokyo Yakult Swallows",
-          "abbrev": "YAK",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260918_DeNA_YAK",
-    "gameDate": "2026-09-18T18:00:00+09:00",
-    "officialDate": "2026-09-18",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3006,
-          "name": "Tokyo Yakult Swallows",
-          "abbrev": "YAK",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260918_HAN_HIR",
-    "gameDate": "2026-09-18T18:00:00+09:00",
-    "officialDate": "2026-09-18",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260918_YOM_CHU",
-    "gameDate": "2026-09-18T18:00:00+09:00",
-    "officialDate": "2026-09-18",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3001,
-          "name": "Yomiuri Giants",
-          "abbrev": "YOM",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3005,
-          "name": "Chunichi Dragons",
-          "abbrev": "CHU",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260919_DeNA_YAK",
-    "gameDate": "2026-09-19T18:00:00+09:00",
-    "officialDate": "2026-09-19",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3006,
-          "name": "Tokyo Yakult Swallows",
-          "abbrev": "YAK",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260919_HAN_HIR",
-    "gameDate": "2026-09-19T18:00:00+09:00",
-    "officialDate": "2026-09-19",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260919_LOT_SEI",
-    "gameDate": "2026-09-19T18:00:00+09:00",
-    "officialDate": "2026-09-19",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3012,
-          "name": "Saitama Seibu Lions",
-          "abbrev": "SEI",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260919_NHF_ORX",
-    "gameDate": "2026-09-19T14:00:00+09:00",
-    "officialDate": "2026-09-19",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3008,
-          "name": "Hokkaido Nippon-Ham Fighters",
-          "abbrev": "NHF",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3011,
-          "name": "ORIX Buffaloes",
-          "abbrev": "ORX",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260919_RAK_SBH",
-    "gameDate": "2026-09-19T14:00:00+09:00",
-    "officialDate": "2026-09-19",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3010,
-          "name": "Tohoku Rakuten Golden Eagles",
-          "abbrev": "RAK",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3007,
-          "name": "Fukuoka SoftBank Hawks",
-          "abbrev": "SBH",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260919_YOM_CHU",
-    "gameDate": "2026-09-19T14:00:00+09:00",
-    "officialDate": "2026-09-19",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3001,
-          "name": "Yomiuri Giants",
-          "abbrev": "YOM",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3005,
-          "name": "Chunichi Dragons",
-          "abbrev": "CHU",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260920_CHU_HIR",
-    "gameDate": "2026-09-20T18:00:00+09:00",
-    "officialDate": "2026-09-20",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3005,
-          "name": "Chunichi Dragons",
-          "abbrev": "CHU",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260920_HAN_DeNA",
-    "gameDate": "2026-09-20T18:00:00+09:00",
-    "officialDate": "2026-09-20",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260920_LOT_SEI",
-    "gameDate": "2026-09-20T18:00:00+09:00",
-    "officialDate": "2026-09-20",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3012,
-          "name": "Saitama Seibu Lions",
-          "abbrev": "SEI",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260920_NHF_ORX",
-    "gameDate": "2026-09-20T14:00:00+09:00",
-    "officialDate": "2026-09-20",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3008,
-          "name": "Hokkaido Nippon-Ham Fighters",
-          "abbrev": "NHF",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3011,
-          "name": "ORIX Buffaloes",
-          "abbrev": "ORX",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260920_RAK_SBH",
-    "gameDate": "2026-09-20T14:00:00+09:00",
-    "officialDate": "2026-09-20",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3010,
-          "name": "Tohoku Rakuten Golden Eagles",
-          "abbrev": "RAK",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3007,
-          "name": "Fukuoka SoftBank Hawks",
-          "abbrev": "SBH",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260920_YOM_YAK",
-    "gameDate": "2026-09-20T14:00:00+09:00",
-    "officialDate": "2026-09-20",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3001,
-          "name": "Yomiuri Giants",
-          "abbrev": "YOM",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3006,
-          "name": "Tokyo Yakult Swallows",
-          "abbrev": "YAK",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260921_CHU_HIR",
-    "gameDate": "2026-09-21T14:00:00+09:00",
-    "officialDate": "2026-09-21",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3005,
-          "name": "Chunichi Dragons",
-          "abbrev": "CHU",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260921_HAN_DeNA",
-    "gameDate": "2026-09-21T14:00:00+09:00",
-    "officialDate": "2026-09-21",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260921_LOT_SEI",
+    "gamePk": "2026092101446",
     "gameDate": "2026-09-21T18:00:00+09:00",
     "officialDate": "2026-09-21",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
-        "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3012,
-          "name": "Saitama Seibu Lions",
-          "abbrev": "SEI",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260921_NHF_ORX",
-    "gameDate": "2026-09-21T14:00:00+09:00",
-    "officialDate": "2026-09-21",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3008,
-          "name": "Hokkaido Nippon-Ham Fighters",
-          "abbrev": "NHF",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3011,
-          "name": "ORIX Buffaloes",
-          "abbrev": "ORX",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260921_RAK_SBH",
-    "gameDate": "2026-09-21T13:00:00+09:00",
-    "officialDate": "2026-09-21",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3010,
-          "name": "Tohoku Rakuten Golden Eagles",
-          "abbrev": "RAK",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3007,
-          "name": "Fukuoka SoftBank Hawks",
-          "abbrev": "SBH",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260922_DeNA_CHU",
-    "gameDate": "2026-09-22T18:00:00+09:00",
-    "officialDate": "2026-09-22",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
         "team": {
           "id": 3005,
           "name": "Chunichi Dragons",
@@ -29500,23 +29315,10 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260922_HIR_YOM",
-    "gameDate": "2026-09-22T15:00:00+09:00",
-    "officialDate": "2026-09-22",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
+        "score": 10,
+        "isWinner": true
+      },
+      "home": {
         "team": {
           "id": 3004,
           "name": "Hiroshima Toyo Carp",
@@ -29524,66 +29326,55 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3001,
-          "name": "Yomiuri Giants",
-          "abbrev": "YOM",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
+        "score": 0,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260922_LOT_ORX",
-    "gameDate": "2026-09-22T18:00:00+09:00",
-    "officialDate": "2026-09-22",
+    "gamePk": "2026092101447",
+    "gameDate": "2026-09-21T18:00:00+09:00",
+    "officialDate": "2026-09-21",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
         "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
           "league": "NPB",
-          "division": "Pacific League"
+          "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 3,
+        "isWinner": true
       },
       "home": {
         "team": {
-          "id": 3011,
-          "name": "ORIX Buffaloes",
-          "abbrev": "ORX",
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
           "league": "NPB",
-          "division": "Pacific League"
+          "division": "Central League"
         },
-        "score": null,
+        "score": 2,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260922_NHF_RAK",
-    "gameDate": "2026-09-22T18:00:00+09:00",
-    "officialDate": "2026-09-22",
+    "gamePk": "2026092101807",
+    "gameDate": "2026-09-21T18:00:00+09:00",
+    "officialDate": "2026-09-21",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -29594,10 +29385,34 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 5,
+        "isWinner": true
       },
       "home": {
+        "team": {
+          "id": 3011,
+          "name": "ORIX Buffaloes",
+          "abbrev": "ORX",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 3,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092101808",
+    "gameDate": "2026-09-21T18:00:00+09:00",
+    "officialDate": "2026-09-21",
+    "stage": null,
+    "status": {
+      "detailedState": "Postponed",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
         "team": {
           "id": 3010,
           "name": "Tohoku Rakuten Golden Eagles",
@@ -29607,25 +29422,37 @@
         },
         "score": null,
         "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260922_SBH_SEI",
-    "gameDate": "2026-09-22T18:00:00+09:00",
-    "officialDate": "2026-09-22",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
+      },
+      "home": {
         "team": {
           "id": 3007,
           "name": "Fukuoka SoftBank Hawks",
           "abbrev": "SBH",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": null,
+        "isWinner": false
+      }
+    },
+    "isTie": false,
+    "isCancelled": true
+  },
+  {
+    "gamePk": "2026092101809",
+    "gameDate": "2026-09-21T18:00:00+09:00",
+    "officialDate": "2026-09-21",
+    "stage": null,
+    "status": {
+      "detailedState": "Postponed",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
           "league": "NPB",
           "division": "Pacific League"
         },
@@ -29644,16 +29471,17 @@
         "isWinner": false
       }
     },
-    "isTie": false
+    "isTie": false,
+    "isCancelled": true
   },
   {
-    "gamePk": "20260922_YAK_HAN",
+    "gamePk": "2026092201448",
     "gameDate": "2026-09-22T18:00:00+09:00",
     "officialDate": "2026-09-22",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -29664,7 +29492,7 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 7,
         "isWinner": false
       },
       "home": {
@@ -29675,300 +29503,230 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 9,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092201449",
+    "gameDate": "2026-09-22T18:00:00+09:00",
+    "officialDate": "2026-09-22",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 7,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3005,
+          "name": "Chunichi Dragons",
+          "abbrev": "CHU",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260923_DeNA_CHU",
+    "gamePk": "2026092201450",
+    "gameDate": "2026-09-22T18:00:00+09:00",
+    "officialDate": "2026-09-22",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 2,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092201810",
+    "gameDate": "2026-09-22T18:00:00+09:00",
+    "officialDate": "2026-09-22",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "abbrev": "NHF",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 6,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3010,
+          "name": "Tohoku Rakuten Golden Eagles",
+          "abbrev": "RAK",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 5,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092201811",
+    "gameDate": "2026-09-22T18:00:00+09:00",
+    "officialDate": "2026-09-22",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3007,
+          "name": "Fukuoka SoftBank Hawks",
+          "abbrev": "SBH",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 6,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3012,
+          "name": "Saitama Seibu Lions",
+          "abbrev": "SEI",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 5,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092201938",
+    "gameDate": "2026-09-22T18:00:00+09:00",
+    "officialDate": "2026-09-22",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 4,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3011,
+          "name": "ORIX Buffaloes",
+          "abbrev": "ORX",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 6,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092301451",
     "gameDate": "2026-09-23T18:00:00+09:00",
     "officialDate": "2026-09-23",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
         "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
+          "id": 3006,
+          "name": "Tokyo Yakult Swallows",
+          "abbrev": "YAK",
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 4,
         "isWinner": false
       },
       "home": {
         "team": {
-          "id": 3005,
-          "name": "Chunichi Dragons",
-          "abbrev": "CHU",
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 8,
+        "isWinner": true
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260923_HIR_YOM",
-    "gameDate": "2026-09-23T15:00:00+09:00",
-    "officialDate": "2026-09-23",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3001,
-          "name": "Yomiuri Giants",
-          "abbrev": "YOM",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260923_LOT_ORX",
-    "gameDate": "2026-09-23T17:00:00+09:00",
-    "officialDate": "2026-09-23",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3011,
-          "name": "ORIX Buffaloes",
-          "abbrev": "ORX",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260923_NHF_RAK",
+    "gamePk": "2026092301452",
     "gameDate": "2026-09-23T18:00:00+09:00",
     "officialDate": "2026-09-23",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3008,
-          "name": "Hokkaido Nippon-Ham Fighters",
-          "abbrev": "NHF",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3010,
-          "name": "Tohoku Rakuten Golden Eagles",
-          "abbrev": "RAK",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260923_SBH_SEI",
-    "gameDate": "2026-09-23T14:00:00+09:00",
-    "officialDate": "2026-09-23",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3007,
-          "name": "Fukuoka SoftBank Hawks",
-          "abbrev": "SBH",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3012,
-          "name": "Saitama Seibu Lions",
-          "abbrev": "SEI",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260923_YAK_HAN",
-    "gameDate": "2026-09-23T14:00:00+09:00",
-    "officialDate": "2026-09-23",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3006,
-          "name": "Tokyo Yakult Swallows",
-          "abbrev": "YAK",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260924_HIR_YOM",
-    "gameDate": "2026-09-24T18:00:00+09:00",
-    "officialDate": "2026-09-24",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3001,
-          "name": "Yomiuri Giants",
-          "abbrev": "YOM",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260924_NHF_RAK",
-    "gameDate": "2026-09-24T18:00:00+09:00",
-    "officialDate": "2026-09-24",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3008,
-          "name": "Hokkaido Nippon-Ham Fighters",
-          "abbrev": "NHF",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3010,
-          "name": "Tohoku Rakuten Golden Eagles",
-          "abbrev": "RAK",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260925_DeNA_HAN",
-    "gameDate": "2026-09-25T18:00:00+09:00",
-    "officialDate": "2026-09-25",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -29979,148 +29737,8 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260925_HIR_YOM",
-    "gameDate": "2026-09-25T18:00:00+09:00",
-    "officialDate": "2026-09-25",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3001,
-          "name": "Yomiuri Giants",
-          "abbrev": "YOM",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260925_ORX_SBH",
-    "gameDate": "2026-09-25T18:00:00+09:00",
-    "officialDate": "2026-09-25",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3011,
-          "name": "ORIX Buffaloes",
-          "abbrev": "ORX",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3007,
-          "name": "Fukuoka SoftBank Hawks",
-          "abbrev": "SBH",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260925_SEI_LOT",
-    "gameDate": "2026-09-25T18:00:00+09:00",
-    "officialDate": "2026-09-25",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3012,
-          "name": "Saitama Seibu Lions",
-          "abbrev": "SEI",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260925_YAK_CHU",
-    "gameDate": "2026-09-25T18:00:00+09:00",
-    "officialDate": "2026-09-25",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3006,
-          "name": "Tokyo Yakult Swallows",
-          "abbrev": "YAK",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
+        "score": 4,
+        "isWinner": true
       },
       "home": {
         "team": {
@@ -30130,69 +29748,58 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 3,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260926_DeNA_HAN",
-    "gameDate": "2026-09-26T14:00:00+09:00",
-    "officialDate": "2026-09-26",
+    "gamePk": "2026092301453",
+    "gameDate": "2026-09-23T18:00:00+09:00",
+    "officialDate": "2026-09-23",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
         "team": {
-          "id": 3003,
-          "name": "Yokohama DeNA BayStars",
-          "abbrev": "DeNA",
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 1,
         "isWinner": false
       },
       "home": {
         "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 2,
+        "isWinner": true
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260926_ORX_NHF",
-    "gameDate": "2026-09-26T14:00:00+09:00",
-    "officialDate": "2026-09-26",
+    "gamePk": "2026092301812",
+    "gameDate": "2026-09-23T18:00:00+09:00",
+    "officialDate": "2026-09-23",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
-        "team": {
-          "id": 3011,
-          "name": "ORIX Buffaloes",
-          "abbrev": "ORX",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
         "team": {
           "id": 3008,
           "name": "Hokkaido Nippon-Ham Fighters",
@@ -30200,31 +29807,7 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260926_SBH_RAK",
-    "gameDate": "2026-09-26T18:00:00+09:00",
-    "officialDate": "2026-09-26",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3007,
-          "name": "Fukuoka SoftBank Hawks",
-          "abbrev": "SBH",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
+        "score": 3,
         "isWinner": false
       },
       "home": {
@@ -30235,20 +29818,160 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 5,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092301813",
+    "gameDate": "2026-09-23T18:00:00+09:00",
+    "officialDate": "2026-09-23",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 0,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3011,
+          "name": "ORIX Buffaloes",
+          "abbrev": "ORX",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 1,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092301814",
+    "gameDate": "2026-09-23T18:00:00+09:00",
+    "officialDate": "2026-09-23",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3007,
+          "name": "Fukuoka SoftBank Hawks",
+          "abbrev": "SBH",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 10,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3012,
+          "name": "Saitama Seibu Lions",
+          "abbrev": "SEI",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 3,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260926_SEI_LOT",
-    "gameDate": "2026-09-26T14:00:00+09:00",
-    "officialDate": "2026-09-26",
+    "gamePk": "2026092401815",
+    "gameDate": "2026-09-24T18:00:00+09:00",
+    "officialDate": "2026-09-24",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "abbrev": "NHF",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 0,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3010,
+          "name": "Tohoku Rakuten Golden Eagles",
+          "abbrev": "RAK",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 6,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092401946",
+    "gameDate": "2026-09-24T18:00:00+09:00",
+    "officialDate": "2026-09-24",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092501816",
+    "gameDate": "2026-09-25T18:00:00+09:00",
+    "officialDate": "2026-09-25",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30259,7 +29982,7 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 2,
         "isWinner": false
       },
       "home": {
@@ -30270,20 +29993,55 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 6,
+        "isWinner": true
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260926_YAK_CHU",
-    "gameDate": "2026-09-26T18:00:00+09:00",
-    "officialDate": "2026-09-26",
+    "gamePk": "2026092501817",
+    "gameDate": "2026-09-25T18:00:00+09:00",
+    "officialDate": "2026-09-25",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3011,
+          "name": "ORIX Buffaloes",
+          "abbrev": "ORX",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 0,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3007,
+          "name": "Fukuoka SoftBank Hawks",
+          "abbrev": "SBH",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 9,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092501955",
+    "gameDate": "2026-09-25T18:00:00+09:00",
+    "officialDate": "2026-09-25",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30294,8 +30052,8 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 5,
+        "isWinner": true
       },
       "home": {
         "team": {
@@ -30305,20 +30063,20 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 4,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260927_DeNA_HIR",
-    "gameDate": "2026-09-27T14:00:00+09:00",
-    "officialDate": "2026-09-27",
+    "gamePk": "2026092501956",
+    "gameDate": "2026-09-25T18:00:00+09:00",
+    "officialDate": "2026-09-25",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30329,10 +30087,34 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 2,
+        "isWinner": true
       },
       "home": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092501957",
+    "gameDate": "2026-09-25T18:00:00+09:00",
+    "officialDate": "2026-09-25",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
         "team": {
           "id": 3004,
           "name": "Hiroshima Toyo Carp",
@@ -30340,23 +30122,45 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 3,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 2,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260927_LOT_NHF",
-    "gameDate": "2026-09-27T18:00:00+09:00",
-    "officialDate": "2026-09-27",
+    "gamePk": "2026092601818",
+    "gameDate": "2026-09-26T18:00:00+09:00",
+    "officialDate": "2026-09-26",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
+        "team": {
+          "id": 3012,
+          "name": "Saitama Seibu Lions",
+          "abbrev": "SEI",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 5,
+        "isWinner": true
+      },
+      "home": {
         "team": {
           "id": 3009,
           "name": "Chiba Lotte Marines",
@@ -30364,7 +30168,31 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 4,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092601819",
+    "gameDate": "2026-09-26T18:00:00+09:00",
+    "officialDate": "2026-09-26",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3011,
+          "name": "ORIX Buffaloes",
+          "abbrev": "ORX",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 0,
         "isWinner": false
       },
       "home": {
@@ -30375,20 +30203,20 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 2,
+        "isWinner": true
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260927_SBH_ORX",
-    "gameDate": "2026-09-27T14:00:00+09:00",
-    "officialDate": "2026-09-27",
+    "gamePk": "2026092601820",
+    "gameDate": "2026-09-26T18:00:00+09:00",
+    "officialDate": "2026-09-26",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30399,43 +30227,8 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3011,
-          "name": "ORIX Buffaloes",
-          "abbrev": "ORX",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260927_SEI_RAK",
-    "gameDate": "2026-09-27T18:00:00+09:00",
-    "officialDate": "2026-09-27",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3012,
-          "name": "Saitama Seibu Lions",
-          "abbrev": "SEI",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
+        "score": 4,
+        "isWinner": true
       },
       "home": {
         "team": {
@@ -30445,34 +30238,23 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 0,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260927_YOM_YAK",
-    "gameDate": "2026-09-27T18:00:00+09:00",
-    "officialDate": "2026-09-27",
+    "gamePk": "2026092601958",
+    "gameDate": "2026-09-26T18:00:00+09:00",
+    "officialDate": "2026-09-26",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
-        "team": {
-          "id": 3001,
-          "name": "Yomiuri Giants",
-          "abbrev": "YOM",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
         "team": {
           "id": 3006,
           "name": "Tokyo Yakult Swallows",
@@ -30480,20 +30262,31 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 5,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3005,
+          "name": "Chunichi Dragons",
+          "abbrev": "CHU",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260928_DeNA_HIR",
-    "gameDate": "2026-09-28T18:00:00+09:00",
-    "officialDate": "2026-09-28",
+    "gamePk": "2026092601959",
+    "gameDate": "2026-09-26T18:00:00+09:00",
+    "officialDate": "2026-09-26",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30504,31 +30297,66 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 3,
         "isWinner": false
       },
       "home": {
         "team": {
-          "id": 3004,
-          "name": "Hiroshima Toyo Carp",
-          "abbrev": "HIR",
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 8,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092701821",
+    "gameDate": "2026-09-27T18:00:00+09:00",
+    "officialDate": "2026-09-27",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3012,
+          "name": "Saitama Seibu Lions",
+          "abbrev": "SEI",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 3,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3010,
+          "name": "Tohoku Rakuten Golden Eagles",
+          "abbrev": "RAK",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 2,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260928_LOT_NHF",
-    "gameDate": "2026-09-28T18:00:00+09:00",
-    "officialDate": "2026-09-28",
+    "gamePk": "2026092701822",
+    "gameDate": "2026-09-27T18:00:00+09:00",
+    "officialDate": "2026-09-27",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30539,8 +30367,8 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 6,
+        "isWinner": true
       },
       "home": {
         "team": {
@@ -30550,137 +30378,32 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 1,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260928_SEI_RAK",
-    "gameDate": "2026-09-28T18:00:00+09:00",
-    "officialDate": "2026-09-28",
+    "gamePk": "2026092701823",
+    "gameDate": "2026-09-27T18:00:00+09:00",
+    "officialDate": "2026-09-27",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
         "team": {
-          "id": 3012,
-          "name": "Saitama Seibu Lions",
-          "abbrev": "SEI",
+          "id": 3007,
+          "name": "Fukuoka SoftBank Hawks",
+          "abbrev": "SBH",
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3010,
-          "name": "Tohoku Rakuten Golden Eagles",
-          "abbrev": "RAK",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260929_HAN_YAK",
-    "gameDate": "2026-09-29T18:00:00+09:00",
-    "officialDate": "2026-09-29",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3002,
-          "name": "Hanshin Tigers",
-          "abbrev": "HAN",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3006,
-          "name": "Tokyo Yakult Swallows",
-          "abbrev": "YAK",
-          "league": "NPB",
-          "division": "Central League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260929_RAK_LOT",
-    "gameDate": "2026-09-29T18:00:00+09:00",
-    "officialDate": "2026-09-29",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3010,
-          "name": "Tohoku Rakuten Golden Eagles",
-          "abbrev": "RAK",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      },
-      "home": {
-        "team": {
-          "id": 3009,
-          "name": "Chiba Lotte Marines",
-          "abbrev": "LOT",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
-      }
-    },
-    "isTie": false
-  },
-  {
-    "gamePk": "20260929_SEI_ORX",
-    "gameDate": "2026-09-29T18:00:00+09:00",
-    "officialDate": "2026-09-29",
-    "stage": null,
-    "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
-    },
-    "teams": {
-      "away": {
-        "team": {
-          "id": 3012,
-          "name": "Saitama Seibu Lions",
-          "abbrev": "SEI",
-          "league": "NPB",
-          "division": "Pacific League"
-        },
-        "score": null,
-        "isWinner": false
+        "score": 12,
+        "isWinner": true
       },
       "home": {
         "team": {
@@ -30690,20 +30413,20 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 5,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260929_YOM_HIR",
-    "gameDate": "2026-09-29T18:00:00+09:00",
-    "officialDate": "2026-09-29",
+    "gamePk": "2026092701960",
+    "gameDate": "2026-09-27T18:00:00+09:00",
+    "officialDate": "2026-09-27",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30714,7 +30437,42 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 11,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3006,
+          "name": "Tokyo Yakult Swallows",
+          "abbrev": "YAK",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 0,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092701961",
+    "gameDate": "2026-09-27T18:00:00+09:00",
+    "officialDate": "2026-09-27",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
         "isWinner": false
       },
       "home": {
@@ -30725,20 +30483,230 @@
           "league": "NPB",
           "division": "Central League"
         },
-        "score": null,
+        "score": 5,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092801824",
+    "gameDate": "2026-09-28T18:00:00+09:00",
+    "officialDate": "2026-09-28",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3012,
+          "name": "Saitama Seibu Lions",
+          "abbrev": "SEI",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 2,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3010,
+          "name": "Tohoku Rakuten Golden Eagles",
+          "abbrev": "RAK",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 4,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092801825",
+    "gameDate": "2026-09-28T18:00:00+09:00",
+    "officialDate": "2026-09-28",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 3,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3008,
+          "name": "Hokkaido Nippon-Ham Fighters",
+          "abbrev": "NHF",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 8,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092801962",
+    "gameDate": "2026-09-28T18:00:00+09:00",
+    "officialDate": "2026-09-28",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3003,
+          "name": "Yokohama DeNA BayStars",
+          "abbrev": "DeNA",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 4,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092901826",
+    "gameDate": "2026-09-29T18:00:00+09:00",
+    "officialDate": "2026-09-29",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3010,
+          "name": "Tohoku Rakuten Golden Eagles",
+          "abbrev": "RAK",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 3,
+        "isWinner": false
+      },
+      "home": {
+        "team": {
+          "id": 3009,
+          "name": "Chiba Lotte Marines",
+          "abbrev": "LOT",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 6,
+        "isWinner": true
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092901827",
+    "gameDate": "2026-09-29T18:00:00+09:00",
+    "officialDate": "2026-09-29",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3012,
+          "name": "Saitama Seibu Lions",
+          "abbrev": "SEI",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 2,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3011,
+          "name": "ORIX Buffaloes",
+          "abbrev": "ORX",
+          "league": "NPB",
+          "division": "Pacific League"
+        },
+        "score": 1,
         "isWinner": false
       }
     },
     "isTie": false
   },
   {
-    "gamePk": "20260930_HAN_YAK",
-    "gameDate": "2026-09-30T18:00:00+09:00",
-    "officialDate": "2026-09-30",
+    "gamePk": "2026092901963",
+    "gameDate": "2026-09-29T18:00:00+09:00",
+    "officialDate": "2026-09-29",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3001,
+          "name": "Yomiuri Giants",
+          "abbrev": "YOM",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 3,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3004,
+          "name": "Hiroshima Toyo Carp",
+          "abbrev": "HIR",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 1,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026092901964",
+    "gameDate": "2026-09-29T18:00:00+09:00",
+    "officialDate": "2026-09-29",
+    "stage": null,
+    "status": {
+      "detailedState": "Postponed",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30764,16 +30732,17 @@
         "isWinner": false
       }
     },
-    "isTie": false
+    "isTie": false,
+    "isCancelled": true
   },
   {
-    "gamePk": "20260930_RAK_LOT",
+    "gamePk": "2026093001828",
     "gameDate": "2026-09-30T18:00:00+09:00",
     "officialDate": "2026-09-30",
     "stage": null,
     "status": {
-      "detailedState": "Scheduled",
-      "abstractGameState": "P"
+      "detailedState": "Final",
+      "abstractGameState": "F"
     },
     "teams": {
       "away": {
@@ -30784,8 +30753,8 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
-        "isWinner": false
+        "score": 3,
+        "isWinner": true
       },
       "home": {
         "team": {
@@ -30795,7 +30764,42 @@
           "league": "NPB",
           "division": "Pacific League"
         },
-        "score": null,
+        "score": 0,
+        "isWinner": false
+      }
+    },
+    "isTie": false
+  },
+  {
+    "gamePk": "2026093001965",
+    "gameDate": "2026-09-30T18:00:00+09:00",
+    "officialDate": "2026-09-30",
+    "stage": null,
+    "status": {
+      "detailedState": "Final",
+      "abstractGameState": "F"
+    },
+    "teams": {
+      "away": {
+        "team": {
+          "id": 3002,
+          "name": "Hanshin Tigers",
+          "abbrev": "HAN",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 5,
+        "isWinner": true
+      },
+      "home": {
+        "team": {
+          "id": 3006,
+          "name": "Tokyo Yakult Swallows",
+          "abbrev": "YAK",
+          "league": "NPB",
+          "division": "Central League"
+        },
+        "score": 0,
         "isWinner": false
       }
     },

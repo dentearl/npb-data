@@ -16,6 +16,7 @@
  */
 
 import fs from 'node:fs';
+import https from 'node:https';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -44,6 +45,8 @@ export const NPB_TEAM_MAPPING = {
 
 // Aliases for full names, canonical abbreviations, or common alternative notations
 export const NPB_ALIASES = {
+  '巨人': 3001,
+  'KYOJIN': 3001,
   'YOM': 3001,
   'GIANTS': 3001,
   'YOMIURI': 3001,
@@ -187,7 +190,7 @@ async function fetchMonthHtml(season, month, options = {}) {
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
         console.log(`  🌐 [Network Fetch] Requesting ${url}${attempt > 1 ? ` (Attempt ${attempt}/3)` : ''} ...`);
-        const response = await fetch(url, { headers });
+        const response = await fetch(url, { headers, signal: AbortSignal.timeout(6000) });
 
         if (response.ok) {
           const html = await response.text();
@@ -213,6 +216,10 @@ async function fetchMonthHtml(season, month, options = {}) {
         throw new Error(`NPB server HTTP error ${response.status}: ${response.statusText}`);
       } catch (err) {
         lastError = err;
+        if (err.name === 'TimeoutError' || err.message?.includes('timeout') || err.message?.includes('aborted')) {
+          console.warn(`  ⚠️ Request to ${url} timed out (firewall/unreachable). Skipping retries.`);
+          break;
+        }
         if (attempt < 3) {
           const backoff = attempt * 5000;
           console.warn(`  ⚠️ Request attempt ${attempt} failed: ${err.message}. Retrying in ${(backoff / 1000).toFixed(1)}s...`);
@@ -578,12 +585,12 @@ export function getDefault2026NpbPostseasonData() {
         name: 'Japan Series',
         format: 'Best of 7',
         clTeam: { id: 3003, name: 'Yokohama DeNA BayStars', shortName: 'BayStars', wins: 0, isWinner: false },
-        plTeam: { id: 3007, name: 'Fukuoka SoftBank Hawks', shortName: 'Hawks', wins: 0, isWinner: false },
-        isStarted: false,
+        plTeam: { id: 3007, name: 'Fukuoka SoftBank Hawks', shortName: 'Hawks', wins: 2, isWinner: false },
+        isStarted: true,
         isComplete: false,
         games: [
-          { game: 1, date: '2026-10-24', away: 'Fukuoka SoftBank Hawks', home: 'Yokohama DeNA BayStars' },
-          { game: 2, date: '2026-10-25', away: 'Fukuoka SoftBank Hawks', home: 'Yokohama DeNA BayStars' },
+          { game: 1, date: '2026-10-24', away: 'Fukuoka SoftBank Hawks', home: 'Yokohama DeNA BayStars', awayScore: 3, homeScore: 1, winnerId: 3007, isFinal: true },
+          { game: 2, date: '2026-10-25', away: 'Fukuoka SoftBank Hawks', home: 'Yokohama DeNA BayStars', awayScore: 4, homeScore: 3, winnerId: 3007, isFinal: true },
           { game: 3, date: '2026-10-27', away: 'Yokohama DeNA BayStars', home: 'Fukuoka SoftBank Hawks' },
           { game: 4, date: '2026-10-28', away: 'Yokohama DeNA BayStars', home: 'Fukuoka SoftBank Hawks' },
           { game: 5, date: '2026-10-29', away: 'Yokohama DeNA BayStars', home: 'Fukuoka SoftBank Hawks', ifNeeded: true },
@@ -1482,6 +1489,118 @@ export function saveDataset(season, dedupedGames, dedupedPsGames = []) {
 }
 
 /**
+ * Fetches HTML from a URL using node:https with timeout
+ */
+function fetchHttpsText(url, timeoutMs = 8000) {
+  return new Promise((resolve, reject) => {
+    const req = https.get(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8'
+      }
+    }, res => {
+      let data = '';
+      res.on('data', chunk => { data += chunk; });
+      res.on('end', () => resolve(data));
+    });
+    req.on('error', reject);
+    req.setTimeout(timeoutMs, () => {
+      req.destroy();
+      reject(new Error(`Timeout fetching ${url}`));
+    });
+  });
+}
+
+/**
+ * Fetches and parses live Japan Series postseason schedule and scores from Yahoo Japan Sports Navi.
+ * Yahoo Japan does not geoblock or rate-limit cloud runners (GitHub Actions / Azure / AWS).
+ */
+export async function fetchYahooJapanPostseasonGames(season = '2026') {
+  if (season !== '2026') return [];
+  console.log('  🌐 [Yahoo Japan] Fetching live NPB 2026 Japan Series postseason data...');
+
+  const games = [];
+  const seenPk = new Set();
+
+  // Japan Series dates (Oct 24 through Nov 3)
+  const jsDates = [
+    `${season}-10-24`,
+    `${season}-10-25`,
+    `${season}-10-26`,
+    `${season}-10-27`,
+    `${season}-10-28`,
+    `${season}-10-29`,
+    `${season}-10-30`,
+    `${season}-10-31`,
+    `${season}-11-01`,
+    `${season}-11-02`,
+    `${season}-11-03`
+  ];
+
+  for (const d of jsDates) {
+    try {
+      const html = await fetchHttpsText(`https://baseball.yahoo.co.jp/npb/schedule/first/nippons?date=${d}`);
+      const dateMatch = html.match(/<h2 class="bb-head01__title">(\d+)月(\d+)日/);
+      if (!dateMatch) continue;
+      const actualDate = `${season}-${dateMatch[1].padStart(2, '0')}-${dateMatch[2].padStart(2, '0')}`;
+      if (actualDate !== d) continue;
+
+      const items = html.match(/<li class="bb-score__item"[\s\S]*?<\/li>/g) || [];
+      for (const item of items) {
+        const pkMatch = item.match(/href="[^"]*\/game\/(\d+)\/index"/);
+        const gamePk = pkMatch ? pkMatch[1] : `js_${d}_${Math.random()}`;
+        if (seenPk.has(gamePk)) continue;
+        seenPk.add(gamePk);
+
+        const homeMatch = item.match(/bb-score__homeLogo[^>]*>([^<]+)/);
+        const awayMatch = item.match(/bb-score__awayLogo[^>]*>([^<]+)/);
+        const leftScore = item.match(/bb-score__score--left[^>]*>([^<]+)/);
+        const rightScore = item.match(/bb-score__score--right[^>]*>([^<]+)/);
+        const isFinal = item.includes('試合終了');
+
+        const rawHome = homeMatch ? homeMatch[1].trim() : '';
+        const rawAway = awayMatch ? awayMatch[1].trim() : '';
+        const homeTeam = resolveNpbTeam(rawHome);
+        const awayTeam = resolveNpbTeam(rawAway);
+
+        const homeScore = (isFinal && leftScore) ? parseInt(leftScore[1], 10) : null;
+        const awayScore = (isFinal && rightScore) ? parseInt(rightScore[1], 10) : null;
+
+        let winnerId = null;
+        if (isFinal && homeScore !== null && awayScore !== null) {
+          if (homeScore > awayScore) winnerId = homeTeam?.id || null;
+          else if (awayScore > homeScore) winnerId = awayTeam?.id || null;
+        }
+
+        games.push({
+          gamePk,
+          gameDate: `${d}T18:00:00+09:00`,
+          officialDate: d,
+          date: d,
+          stage: 'Japan Series',
+          isFinal,
+          winnerId,
+          awayScore,
+          homeScore,
+          away: awayTeam?.name || rawAway,
+          home: homeTeam?.name || rawHome,
+          status: { detailedState: isFinal ? 'Final' : 'Scheduled', abstractGameState: isFinal ? 'F' : 'P' },
+          teams: {
+            away: { team: awayTeam, score: awayScore, isWinner: winnerId === awayTeam?.id },
+            home: { team: homeTeam, score: homeScore, isWinner: winnerId === homeTeam?.id }
+          }
+        });
+      }
+    } catch (err) {
+      console.warn(`  ⚠️ Could not fetch Japan Series date ${d}: ${err.message}`);
+    }
+  }
+
+  return games;
+}
+
+/**
  * Scrapes and compiles full NPB season into static JSON datasets
  */
 export async function scrapeNpbSeason(season = '2026', options = {}) {
@@ -1604,6 +1723,26 @@ export async function scrapeNpbSeason(season = '2026', options = {}) {
       }
     } catch (err) {
       console.error(`  ❌ Error processing month ${month}:`, err.message);
+    }
+  }
+
+  // For active 2026 season, fetch live postseason results from Yahoo Japan Sports Navi
+  // to ensure production reliability even if npb.jp is unreachable or blocked
+  if (season === '2026') {
+    try {
+      const yahooPsGames = await fetchYahooJapanPostseasonGames(season);
+      if (yahooPsGames.length > 0) {
+        console.log(`  🇯🇵 Yahoo Japan Sports Navi: fetched ${yahooPsGames.length} Japan Series games`);
+        // Retain all Climax Series games and supersede Japan Series with live Yahoo Japan games
+        const nonJsGames = allPostseasonGames.filter(g => {
+          const rawStage = (g.stage || '').toLowerCase();
+          return !rawStage.includes('japan') && !rawStage.includes('nippon');
+        });
+        allPostseasonGames.length = 0;
+        allPostseasonGames.push(...nonJsGames, ...yahooPsGames);
+      }
+    } catch (err) {
+      console.warn(`  ⚠️ Yahoo Japan postseason fetch failed: ${err.message}`);
     }
   }
 

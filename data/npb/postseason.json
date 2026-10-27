@@ -299,7 +299,7 @@
         "id": 3007,
         "name": "Fukuoka SoftBank Hawks",
         "shortName": "Hawks",
-        "wins": 2,
+        "wins": 3,
         "isWinner": false
       },
       "isStarted": true,
@@ -330,10 +330,10 @@
           "date": "2026-10-27",
           "away": "Yokohama DeNA BayStars",
           "home": "Fukuoka SoftBank Hawks",
-          "awayScore": null,
-          "homeScore": null,
-          "winnerId": null,
-          "isFinal": false
+          "awayScore": 1,
+          "homeScore": 2,
+          "winnerId": 3007,
+          "isFinal": true
         },
         {
           "game": 4,

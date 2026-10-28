@@ -2,7 +2,7 @@
   "2026": {
     "era": "climax_series",
     "isStarted": true,
-    "isComplete": false,
+    "isComplete": true,
     "CL": {
       "seeds": {
         "1": {
@@ -94,40 +94,40 @@
           {
             "game": 1,
             "date": "2026-10-14",
-            "away": "Yokohama DeNA BayStars",
-            "home": "Hanshin Tigers",
-            "awayScore": 2,
-            "homeScore": 0,
+            "away": "Hanshin Tigers",
+            "home": "Yokohama DeNA BayStars",
+            "awayScore": 0,
+            "homeScore": 2,
             "winnerId": 3003,
             "isFinal": true
           },
           {
             "game": 2,
             "date": "2026-10-15",
-            "away": "Yokohama DeNA BayStars",
-            "home": "Hanshin Tigers",
-            "awayScore": 4,
-            "homeScore": 0,
+            "away": "Hanshin Tigers",
+            "home": "Yokohama DeNA BayStars",
+            "awayScore": 0,
+            "homeScore": 1,
             "winnerId": 3003,
             "isFinal": true
           },
           {
             "game": 3,
             "date": "2026-10-16",
-            "away": "Yokohama DeNA BayStars",
-            "home": "Hanshin Tigers",
-            "awayScore": 4,
-            "homeScore": 0,
+            "away": "Hanshin Tigers",
+            "home": "Yokohama DeNA BayStars",
+            "awayScore": 0,
+            "homeScore": 4,
             "winnerId": 3003,
             "isFinal": true
           },
           {
             "game": 4,
             "date": "2026-10-17",
-            "away": "Yokohama DeNA BayStars",
-            "home": "Hanshin Tigers",
-            "awayScore": 8,
-            "homeScore": 5,
+            "away": "Hanshin Tigers",
+            "home": "Yokohama DeNA BayStars",
+            "awayScore": 5,
+            "homeScore": 8,
             "winnerId": 3003,
             "isFinal": true
           }
@@ -244,30 +244,30 @@
           {
             "game": 1,
             "date": "2026-10-14",
-            "away": "Hokkaido Nippon-Ham Fighters",
-            "home": "Fukuoka SoftBank Hawks",
-            "awayScore": 4,
-            "homeScore": 6,
+            "away": "Fukuoka SoftBank Hawks",
+            "home": "Hokkaido Nippon-Ham Fighters",
+            "awayScore": 6,
+            "homeScore": 4,
             "winnerId": 3007,
             "isFinal": true
           },
           {
             "game": 2,
             "date": "2026-10-15",
-            "away": "Hokkaido Nippon-Ham Fighters",
-            "home": "Fukuoka SoftBank Hawks",
-            "awayScore": 2,
-            "homeScore": 6,
+            "away": "Fukuoka SoftBank Hawks",
+            "home": "Hokkaido Nippon-Ham Fighters",
+            "awayScore": 6,
+            "homeScore": 2,
             "winnerId": 3007,
             "isFinal": true
           },
           {
             "game": 3,
             "date": "2026-10-16",
-            "away": "Hokkaido Nippon-Ham Fighters",
-            "home": "Fukuoka SoftBank Hawks",
-            "awayScore": 2,
-            "homeScore": 6,
+            "away": "Fukuoka SoftBank Hawks",
+            "home": "Hokkaido Nippon-Ham Fighters",
+            "awayScore": 6,
+            "homeScore": 2,
             "winnerId": 3007,
             "isFinal": true
           }
@@ -293,17 +293,18 @@
         "name": "Yokohama DeNA BayStars",
         "shortName": "BayStars",
         "wins": 0,
-        "isWinner": false
+        "isWinner": false,
+        "isEliminated": true
       },
       "plTeam": {
         "id": 3007,
         "name": "Fukuoka SoftBank Hawks",
         "shortName": "Hawks",
-        "wins": 3,
-        "isWinner": false
+        "wins": 4,
+        "isWinner": true
       },
       "isStarted": true,
-      "isComplete": false,
+      "isComplete": true,
       "games": [
         {
           "game": 1,
@@ -340,42 +341,13 @@
           "date": "2026-10-28",
           "away": "Yokohama DeNA BayStars",
           "home": "Fukuoka SoftBank Hawks",
-          "awayScore": null,
-          "homeScore": null,
-          "winnerId": null,
-          "isFinal": false
-        },
-        {
-          "game": 5,
-          "date": "2026-10-29",
-          "away": "Yokohama DeNA BayStars",
-          "home": "Fukuoka SoftBank Hawks",
-          "awayScore": null,
-          "homeScore": null,
-          "winnerId": null,
-          "isFinal": false
-        },
-        {
-          "game": 6,
-          "date": "2026-10-31",
-          "away": "Fukuoka SoftBank Hawks",
-          "home": "Yokohama DeNA BayStars",
-          "awayScore": null,
-          "homeScore": null,
-          "winnerId": null,
-          "isFinal": false
-        },
-        {
-          "game": 7,
-          "date": "2026-11-01",
-          "away": "Fukuoka SoftBank Hawks",
-          "home": "Yokohama DeNA BayStars",
-          "awayScore": null,
-          "homeScore": null,
-          "winnerId": null,
-          "isFinal": false
+          "awayScore": 2,
+          "homeScore": 4,
+          "winnerId": 3007,
+          "isFinal": true
         }
-      ]
+      ],
+      "winnerId": 3007
     }
   }
 }

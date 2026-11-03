@@ -392,6 +392,7 @@ export function parseNpbCalendarHtml(html = '', seasonYear = '2026', month = '01
           gamePk: gameId,
           gameDate: `${officialDate}T${gameTime}:00+09:00`,
           officialDate,
+          time: gameTime,
           stage: schedMatch[1] || null,
           status: { detailedState: 'Scheduled', abstractGameState: 'P' },
           teams: {
@@ -660,8 +661,18 @@ export function parseNpbPostseason(postseasonGames = [], regularSeasonGames = []
       return;
     }
 
+    // Filter out cancelled / postponed games
+    const activeGames = gamesList.filter(g => !g.isCancelled && g.status?.detailedState !== 'Postponed');
+
+    // Sort chronologically
+    activeGames.sort((a, b) => {
+      const dtA = a.officialDate || a.date || (a.gameDate ? a.gameDate.slice(0, 10) : '');
+      const dtB = b.officialDate || b.date || (b.gameDate ? b.gameDate.slice(0, 10) : '');
+      return dtA.localeCompare(dtB);
+    });
+
     // Check if any games in this series have actually started or completed
-    const hasStarted = gamesList.some(g =>
+    const hasStarted = activeGames.some(g =>
       Boolean(
         g.isFinal ||
         (g.status && (g.status.detailedState === 'Final' || g.status.abstractGameState === 'F')) ||
@@ -669,22 +680,13 @@ export function parseNpbPostseason(postseasonGames = [], regularSeasonGames = []
         (typeof g.teams?.away?.score === 'number' && typeof g.teams?.home?.score === 'number')
       )
     );
-    if (!hasStarted) {
-      seriesObj.isStarted = false;
-      if (initialAdv > 0 && seriesObj.team1) {
-        seriesObj.team1.wins = initialAdv;
-        seriesObj.team1.advantageWins = initialAdv;
-        seriesObj.team1.hasAdvantage = true;
-      }
-      return;
-    }
+    seriesObj.isStarted = hasStarted;
 
-    seriesObj.isStarted = true;
     const parsedGames = [];
     let winsTop = initialAdv;
     let winsBot = 0;
 
-    gamesList.forEach((g, idx) => {
+    activeGames.forEach((g, idx) => {
       const rawAway = g.away || g.teams?.away?.team?.name || '';
       const rawHome = g.home || g.teams?.home?.team?.name || '';
       const awayTeam = resolveNpbTeam(rawAway);
@@ -706,15 +708,21 @@ export function parseNpbPostseason(postseasonGames = [], regularSeasonGames = []
         winnerId = g.winnerId;
       }
 
+      const gmNum = idx + 1;
+      const origGame = Array.isArray(seriesObj.games) ? seriesObj.games.find(og => og.game === gmNum) : null;
+      const ifNeeded = origGame?.ifNeeded || (winsNeeded === 4 && gmNum > 4) || (winsNeeded === 5 && gmNum > 5) || (winsNeeded === 2 && gmNum > 2);
+
       parsedGames.push({
-        game: idx + 1,
-        date: g.officialDate || g.date,
+        game: gmNum,
+        date: g.officialDate || g.date || (g.gameDate ? g.gameDate.slice(0, 10) : origGame?.date),
+        ...(g.time ? { time: g.time } : (origGame?.time ? { time: origGame.time } : {})),
         away: awayName,
         home: homeName,
         awayScore,
         homeScore,
         winnerId,
-        isFinal
+        isFinal,
+        ...(ifNeeded ? { ifNeeded: true } : {})
       });
 
       const topId = seriesObj.team1?.id || seriesObj.team2?.id || seriesObj.clTeam?.id;
@@ -726,7 +734,6 @@ export function parseNpbPostseason(postseasonGames = [], regularSeasonGames = []
       else if (winnerId && homeTeam && winnerId === homeTeam.id) winsTop++;
     });
 
-    seriesObj.games = parsedGames;
     if (seriesObj.team1) {
       seriesObj.team1.wins = winsTop;
       if (initialAdv > 0) {
@@ -750,6 +757,8 @@ export function parseNpbPostseason(postseasonGames = [], regularSeasonGames = []
       if (seriesObj.adv) seriesObj.adv.isEliminated = true;
       if (seriesObj.team3) seriesObj.team3.isEliminated = true;
       if (seriesObj.plTeam) seriesObj.plTeam.isEliminated = true;
+      // Series is complete: truncate to only final played games
+      seriesObj.games = parsedGames.filter(g => g.isFinal);
     } else if (winsBot >= winsNeeded) {
       seriesObj.isComplete = true;
       seriesObj.winnerId = seriesObj.adv?.id || seriesObj.team3?.id || seriesObj.plTeam?.id;
@@ -759,6 +768,29 @@ export function parseNpbPostseason(postseasonGames = [], regularSeasonGames = []
       if (seriesObj.team1) seriesObj.team1.isEliminated = true;
       if (seriesObj.team2) seriesObj.team2.isEliminated = true;
       if (seriesObj.clTeam) seriesObj.clTeam.isEliminated = true;
+      // Series is complete: truncate to only final played games
+      seriesObj.games = parsedGames.filter(g => g.isFinal);
+    } else {
+      // Series is active or upcoming: merge parsed games (final + scheduled) with template
+      if (Array.isArray(seriesObj.games) && seriesObj.games.length > 0) {
+        const mergedGames = seriesObj.games.map((origGame, i) => {
+          const matchingParsed = parsedGames.find(pg => pg.game === origGame.game) || parsedGames[i];
+          if (matchingParsed) return matchingParsed;
+          return {
+            ...origGame,
+            isFinal: false
+          };
+        });
+        parsedGames.forEach(pg => {
+          if (!mergedGames.some(mg => mg.game === pg.game)) {
+            mergedGames.push(pg);
+          }
+        });
+        mergedGames.sort((a, b) => a.game - b.game);
+        seriesObj.games = mergedGames;
+      } else {
+        seriesObj.games = parsedGames;
+      }
     }
   }
 
